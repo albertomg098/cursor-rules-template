@@ -21,14 +21,16 @@ Wait for my answer, then proceed to Step 2.
 
 Based on my answer, you must:
 
-1. **Read the corresponding command file** from the `user_commands/` directory in this workspace:
-   - `hexagonal-python` → Read `user_commands/init_hexagonal_python.md`
-   - `sdk-python` → Read `user_commands/init_sdk_python.md`
-   - `streamlit` → Read `user_commands/init_streamlit.md`
-   - `react-frontend` → Read `user_commands/init_react_frontend.md`
+1. **Access the corresponding command** from User Commands:
+   - `hexagonal-python` → Access User Command `init-hexagonal-python` (or read `user_commands/init_hexagonal_python.md` if available)
+   - `sdk-python` → Access User Command `init-sdk-python` (or read `user_commands/init_sdk_python.md` if available)
+   - `streamlit` → Access User Command `init-streamlit` (or read `user_commands/init_streamlit.md` if available)
+   - `react-frontend` → Access User Command `init-react-frontend` (or read `user_commands/init_react_frontend.md` if available)
    - `custom` → Use detailed interview (see below)
 
-2. **Execute that command's interview and generation process** exactly as written in that file - as if I had pasted that command directly into chat.
+   **Note:** These commands should be set up as User Commands in Cursor Settings. If they're not available, try reading the files from `user_commands/` directory in the workspace, or prompt the user to set them up.
+
+2. **Execute that command's interview and generation process** exactly as written - as if I had pasted that command directly into chat.
 
 3. **Follow that command's instructions completely** - ask its questions in order, generate skills AND commands as specified.
 
