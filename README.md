@@ -28,19 +28,15 @@ Instead of manually writing Cursor rules for each project, this toolkit uses an 
 
 ### One-Time Setup (10 minutes)
 
-1. **Clone this repository**
-   ```bash
-   git clone <your-repo-url>
-   cd cursor-rules-template
-   ```
+**No cloning needed!** Just copy/paste directly from GitHub.
 
-2. **Set global rules** (applies to ALL projects)
-   - Open `user_rules/global_rules.md`
-   - Copy entire contents
+1. **Set global rules** (applies to ALL projects)
+   - Open `user_rules/global_rules.md` on GitHub
+   - Copy entire contents (click "Raw" button for clean copy)
    - Paste into **Cursor Settings → Rules** (`Ctrl+,` → search "Rules")
    - Save
 
-3. **Create global commands** ⚠️ **REQUIRED for router to work**
+2. **Create global commands** ⚠️ **REQUIRED for router to work**
    
    The files in `user_commands/` are markdown prompts that **MUST be set up as User Commands** in Cursor Settings. This is required because:
    - ✅ You can easily access `setup-project` in any project via `/setup-project`
@@ -49,29 +45,29 @@ Instead of manually writing Cursor rules for each project, this toolkit uses an 
    
    **Steps:**
    - Open **Cursor Settings → User Commands** (or `Ctrl+,` → search "User Commands")
-   - Create commands for each file in `user_commands/`:
+   - For each file below, open it on GitHub, copy entire contents, and create a User Command:
      
      **Main Command (Required):**
      - ✅ **Command name:** `setup-project` (or `setup`)
-     - ✅ **Content:** Copy entire contents of `user_commands/setup-project.md`
+     - ✅ **Content:** Copy from `user_commands/setup-project.md` on GitHub
      - ✅ **Description:** "Generate project-specific Cursor rules and commands"
      
      **Supporting Commands (Required for router):**
      - ✅ **Command name:** `init-hexagonal-python`
-     - ✅ **Content:** Copy entire contents of `user_commands/init_hexagonal_python.md`
+        - ✅ **Content:** Copy from `user_commands/init_hexagonal_python.md` on GitHub
      
      - ✅ **Command name:** `init-sdk-python`
-     - ✅ **Content:** Copy entire contents of `user_commands/init_sdk_python.md`
+        - ✅ **Content:** Copy from `user_commands/init_sdk_python.md` on GitHub
      
      - ✅ **Command name:** `init-streamlit`
-     - ✅ **Content:** Copy entire contents of `user_commands/init_streamlit.md`
+        - ✅ **Content:** Copy from `user_commands/init_streamlit.md` on GitHub
      
      - ✅ **Command name:** `init-react-frontend`
-     - ✅ **Content:** Copy entire contents of `user_commands/init_react_frontend.md`
+        - ✅ **Content:** Copy from `user_commands/init_react_frontend.md` on GitHub
    
    **⚠️ Critical:** The `setup-project` command acts as a router and **requires** these commands to be set up as User Commands. Without them, routing will fail.
 
-4. **Keep this repo accessible** - You'll use it for every new project
+**That's it!** Once set up, you can use `/setup-project` in any project. No need to keep the repo accessible.
 
 ### Use in Your Projects
 
@@ -87,7 +83,7 @@ For **any new or existing project**:
 **Option 2: Copy/Paste (Fallback)**
 1. Open your project in Cursor
 2. Open Cursor chat (`Ctrl+L` or `Cmd+L`)
-3. Copy contents of `user_commands/setup-project.md` from this repo
+3. Copy contents of `user_commands/setup-project.md` from GitHub
 4. Paste into chat and answer the interview questions
 5. Project-specific rules and commands are generated automatically ✨
 
@@ -241,7 +237,7 @@ Cursor has two distinct systems that work together:
 **Using Copy/Paste (If commands not set up):**
 1. **Open your project** in Cursor
 2. **Open Cursor chat** (`Ctrl+L` or `Cmd+L`)
-3. **Copy** entire contents of `user_commands/setup-project.md` from this template repo
+3. **Copy** entire contents of `user_commands/setup-project.md` from GitHub
 4. **Paste** into Cursor chat
 5. Follow same interview process as above
 
@@ -254,7 +250,7 @@ Same process as new projects. Existing skills won't be overwritten unless you ex
 ### Adding a Single Skill
 
 1. Open your project in Cursor
-2. Copy content from `.cursor/commands/add-skill.md` in this template repo
+2. Copy content from `.cursor/commands/add-skill.md` on GitHub
 3. Paste into chat
 4. Answer questions about what the skill should cover
 5. Single skill folder is created: `.cursor/skills/<name>/SKILL.md`
@@ -263,12 +259,15 @@ Same process as new projects. Existing skills won't be overwritten unless you ex
 
 ## 🛠️ Extending This Template
 
+**Note:** This section is only needed if you want to extend or customize the template itself. For regular usage, you don't need to clone the repo.
+
 ### Adding a New Project Type
 
 To add support for a new architecture (e.g., Next.js, Vue, Django):
 
-1. **Open this template repo** in Cursor
-2. **Type `/add-project-type`** in Cursor chat
+1. **Clone this repo** (only needed for extending the template)
+2. **Open the cloned repo** in Cursor
+3. **Type `/add-project-type`** in Cursor chat
 3. **Answer the interview:**
    - Project type name
    - Typical structure
@@ -289,16 +288,18 @@ To add support for a new architecture (e.g., Next.js, Vue, Django):
 
 To understand what a project type includes:
 
-1. **Open this template repo** in Cursor
-2. **Type `/explore-project-type`** in Cursor chat
-3. **Specify** which project type to explore
-4. **Get detailed explanation** of structure, skills, and patterns
+1. **Clone this repo** (only needed for exploring)
+2. **Open the cloned repo** in Cursor
+3. **Type `/explore-project-type`** in Cursor chat
+4. **Specify** which project type to explore
+5. **Get detailed explanation** of structure, skills, and patterns
 
 ### Updating Global Rules
 
-1. Edit `user_rules/global_rules.md` in this template repo
-2. Copy updated contents to Cursor Settings → Rules
-3. Commit changes to version control
+1. **Clone this repo** (only needed for updating)
+2. Edit `user_rules/global_rules.md` in the cloned repo
+3. Copy updated contents to Cursor Settings → Rules
+4. Commit changes to version control (optional)
 
 **Note:** After updating global rules, they apply to all projects automatically.
 
