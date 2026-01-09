@@ -1,0 +1,42 @@
+# User Commands Index
+
+## Main Command (Use This)
+
+| Command | Description | Use When |
+|---------|-------------|----------|
+| `setup-project.md` | **Single entry point** - Routes to appropriate command based on project type. Generates both skills (rules) AND commands. | Starting any new project or setting up existing one |
+
+This command will ask what type of project you have and automatically route to the appropriate specific command. The interview is detailed - be specific in your answers!
+
+## Internal Commands (Used Automatically)
+
+These commands are called internally by `setup-project.md`. You don't need to use them directly:
+
+| Command | Project Type |
+|---------|--------------|
+| `init_hexagonal_python.md` | Python backend with hexagonal architecture (FastAPI + Airflow) |
+| `init_sdk_python.md` | Python SDK/Library/Component package |
+| `init_streamlit.md` | Streamlit MVP application |
+| `init_react_frontend.md` | React frontend application (Vite/Next.js) |
+
+## Template Repo Commands (Use `/` in Cursor)
+
+These are **actual Cursor commands** accessible via `/` when working on the template repo:
+
+| Command | Description | Use When |
+|---------|-------------|----------|
+| `/add-project-type` | Create new quick-start command | Want to add support for new project type (e.g., Next.js, Vue, JavaScript, etc.) |
+| `/explore-project-type` | Understand a project type's structure and rules | Want to learn about a project type's standards and patterns |
+| `/add-skill` | Add single skill to other projects | Need to add a skill to a project (not template repo) |
+
+**Note:** These commands automatically update index files - no manual steps needed!
+
+**How to use:** Type `/` in Cursor chat and you'll see available commands. Or type `/add-project-type` directly.
+
+## Usage
+
+1. Open `setup-project.md`
+2. Copy entire contents
+3. Paste into Cursor chat
+4. Answer detailed questions - the command will route automatically
+5. Skills (rules) AND commands are generated automatically
