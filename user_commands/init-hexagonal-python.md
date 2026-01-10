@@ -148,27 +148,58 @@ tests/
 
 ## Generate Skills
 
-Create skills in `.cursor/skills/<name>/SKILL.md` format. Skills should be context-dependent: decide whether to apply always, auto-attach based on file patterns, or make manual.
+Create skills in `.cursor/skills/<name>/SKILL.md` format. **CRITICAL:** Each skill file MUST start with frontmatter in this exact format:
+
+```yaml
+---
+name: "skill-name"
+description: "Description of what this skill enforces"
+globs: ["pattern/**"]  # Only for auto-attach skills (omit for always-on or manual)
+alwaysApply: true      # Only for always-on skills (omit if using globs)
+---
+```
+
+**Important:** 
+- `name` is REQUIRED - use the skill folder name (e.g., "000-project-core")
+- `description` is REQUIRED - brief description of what the skill enforces
+- `globs` is OPTIONAL - only include if auto-attaching to file patterns
+- `alwaysApply` is OPTIONAL - only include if this is an always-on skill (true). If using `globs`, omit `alwaysApply`. For manual skills, omit both.
+
+Skills should be context-dependent: decide whether to apply always, auto-attach based on file patterns, or make manual.
 
 ### Always-On Skills
 - `.cursor/skills/000-project-core/SKILL.md` - Architecture overview, dependency direction (domain ← application ← infrastructure for outbound, inbound can use application), SOLID/DRY/KISS principles, class initialization patterns
+  - Frontmatter: `name: "000-project-core"`, `description: "Architecture overview, dependency direction, SOLID/DRY/KISS principles, class initialization patterns"`, `alwaysApply: true`
 - `.cursor/skills/010-python-standards/SKILL.md` - Type hints always required, numpy-style and English docstrings, pylint, async/await patterns
+  - Frontmatter: `name: "010-python-standards"`, `description: "Type hints always required, numpy-style and English docstrings, pylint, async/await patterns"`, `alwaysApply: true`
 
 ### Auto-Attach Skills (based on file patterns)
 - `.cursor/skills/100-domain-layer/SKILL.md` (glob: `src/domain/**`) - Pure business logic, NO external imports, ABC-based ports (not Protocol), Pydantic entities with business logic, immutable value objects, custom exception hierarchy
+  - Frontmatter: `name: "100-domain-layer"`, `description: "Pure business logic, NO external imports, ABC-based ports, Pydantic entities, immutable value objects, custom exception hierarchy"`, `globs: ["src/domain/**"]`
 - `.cursor/skills/110-application-layer/SKILL.md` (glob: `src/application/**`) - BaseUseCase abstract class pattern, use case classes (one per use case OR pipelines, not both), components (main app logic), resources (utils), schemas (Pydantic)
+  - Frontmatter: `name: "110-application-layer"`, `description: "BaseUseCase abstract class pattern, use case classes, components, resources, schemas"`, `globs: ["src/application/**"]`
 - `.cursor/skills/120-infrastructure/SKILL.md` (glob: `src/infrastructure/**`) - Adapter implementation patterns, manual dependency injection
+  - Frontmatter: `name: "120-infrastructure"`, `description: "Adapter implementation patterns, manual dependency injection"`, `globs: ["src/infrastructure/**"]`
 - `.cursor/skills/121-fastapi/SKILL.md` (glob: `src/infrastructure/inbound_adapters/api/**`) - FastAPI class encapsulation, route organization, middleware patterns, manual DI, error handling, response schemas
+  - Frontmatter: `name: "121-fastapi"`, `description: "FastAPI class encapsulation, route organization, middleware patterns, manual DI, error handling, response schemas"`, `globs: ["src/infrastructure/inbound_adapters/api/**"]`
 - `.cursor/skills/122-cli/SKILL.md` (glob: `src/infrastructure/inbound_adapters/cli/**`) - Typer app class encapsulation, CLI routing pattern, manual DI
+  - Frontmatter: `name: "122-cli"`, `description: "Typer app class encapsulation, CLI routing pattern, manual DI"`, `globs: ["src/infrastructure/inbound_adapters/cli/**"]`
 - `.cursor/skills/123-adapters/SKILL.md` (glob: `src/infrastructure/outbound_adapters/**`) - One file per provider pattern, adapter patterns for external services
+  - Frontmatter: `name: "123-adapters"`, `description: "One file per provider pattern, adapter patterns for external services"`, `globs: ["src/infrastructure/outbound_adapters/**"]`
 - `.cursor/skills/130-interfaces/SKILL.md` (glob: `src/interfaces/**`) - Entrypoint patterns (API/CLI main), NOT DTOs
+  - Frontmatter: `name: "130-interfaces"`, `description: "Entrypoint patterns (API/CLI main), NOT DTOs"`, `globs: ["src/interfaces/**"]`
 - `.cursor/skills/200-testing/SKILL.md` (glob: `tests/**`) - Test structure (e2e/integration/unit mirroring src/), hierarchical conftest, mocking patterns (fixtures, initialization pattern, mocks in conftest), 80% coverage minimum
+  - Frontmatter: `name: "200-testing"`, `description: "Test structure (e2e/integration/unit mirroring src/), hierarchical conftest, mocking patterns, 80% coverage minimum"`, `globs: ["tests/**"]`
 - `.cursor/skills/300-orchestration/SKILL.md` (glob: `orchestration/**`) - Orchestration patterns (DockerOperator, CLI triggering)
+  - Frontmatter: `name: "300-orchestration"`, `description: "Orchestration patterns (DockerOperator, CLI triggering)"`, `globs: ["orchestration/**"]`
 - `.cursor/skills/400-config/SKILL.md` (glob: `**/config/**/*.yaml`) - YAML structure, environment-specific configs, environment folder for infra connections
+  - Frontmatter: `name: "400-config"`, `description: "YAML structure, environment-specific configs, environment folder for infra connections"`, `globs: ["**/config/**/*.yaml"]`
 
 ### Manual Skills
 - `.cursor/skills/900-new-feature/SKILL.md` - Workflow: create port (ABC) → implement use case (BaseUseCase) → create adapter → add tests → update docs
+  - Frontmatter: `name: "900-new-feature"`, `description: "Workflow: create port (ABC) → implement use case (BaseUseCase) → create adapter → add tests → update docs"` (no globs, no alwaysApply)
 - `.cursor/skills/901-update-docs/SKILL.md` - Checklist: README, API docs, tests, changelog
+  - Frontmatter: `name: "901-update-docs"`, `description: "Checklist: README, API docs, tests, changelog"` (no globs, no alwaysApply)
 
 ## Generate Commands
 

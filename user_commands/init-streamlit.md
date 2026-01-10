@@ -99,18 +99,34 @@ config/
 
 ## Generate Skills
 
-Create skills in `.cursor/skills/<name>/SKILL.md` format:
+Create skills in `.cursor/skills/<name>/SKILL.md` format. **CRITICAL:** Each skill file MUST start with frontmatter in this exact format:
+
+```yaml
+---
+name: "skill-name"
+description: "Description of what this skill enforces"
+globs: ["pattern/**"]  # Only for auto-attach skills (omit for always-on or manual)
+alwaysApply: true      # Only for always-on skills (omit if using globs)
+---
+```
 
 ### Always-On Skills
 - `.cursor/skills/000-project-core/SKILL.md` - Project overview, Streamlit patterns, state management, tech stack
+  - Frontmatter: `name: "000-project-core"`, `description: "Project overview, Streamlit patterns, state management, tech stack"`, `alwaysApply: true`
 
 ### Auto-Attach Skills
 - `.cursor/skills/100-pages/SKILL.md` (glob: `src/pages/**`) - Page structure, session state patterns, page config
+  - Frontmatter: `name: "100-pages"`, `description: "Page structure, session state patterns, page config"`, `globs: ["src/pages/**"]`
 - `.cursor/skills/110-components/SKILL.md` (glob: `src/components/**`) - Reusable component patterns, function-based components
+  - Frontmatter: `name: "110-components"`, `description: "Reusable component patterns, function-based components"`, `globs: ["src/components/**"]`
 - `.cursor/skills/120-services/SKILL.md` (glob: `src/services/**`) - Business logic separation, data fetching, API clients
+  - Frontmatter: `name: "120-services"`, `description: "Business logic separation, data fetching, API clients"`, `globs: ["src/services/**"]`
 - `.cursor/skills/130-models/SKILL.md` (glob: `src/models/**`) - Pydantic model patterns, validation
+  - Frontmatter: `name: "130-models"`, `description: "Pydantic model patterns, validation"`, `globs: ["src/models/**"]`
 - `.cursor/skills/140-core/SKILL.md` (glob: `src/core/**`) - Custom exceptions, core utilities
+  - Frontmatter: `name: "140-core"`, `description: "Custom exceptions, core utilities"`, `globs: ["src/core/**"]`
 - `.cursor/skills/200-testing/SKILL.md` (glob: `tests/**`) - Streamlit testing patterns, mocking streamlit functions
+  - Frontmatter: `name: "200-testing"`, `description: "Streamlit testing patterns, mocking streamlit functions"`, `globs: ["tests/**"]`
 
 ## Skill Content
 

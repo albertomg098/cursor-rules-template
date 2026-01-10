@@ -132,12 +132,37 @@ After collecting all answers, generate:
 
 ### Skills (Rules)
 
+**CRITICAL:** Each skill file MUST start with frontmatter in this exact format:
+
+```yaml
+---
+name: "skill-name"
+description: "Description of what this skill enforces"
+globs: ["pattern/**"]  # Only for auto-attach skills (omit for always-on or manual)
+alwaysApply: true      # Only for always-on skills (omit if using globs)
+---
+```
+
+**Important:** 
+- `name` is REQUIRED - use the skill folder name
+- `description` is REQUIRED - brief description of what the skill enforces
+- `globs` is OPTIONAL - only include if auto-attaching to file patterns
+- `alwaysApply` is OPTIONAL - only include if this is an always-on skill (true). If using `globs`, omit `alwaysApply`. For manual skills, omit both.
+
+Generate these skills:
+
 - `.cursor/skills/000-project-core/SKILL.md` (always-on) - Project overview, architecture, domain
+  - Frontmatter: `name: "000-project-core"`, `description: "Project overview, architecture, domain"`, `alwaysApply: true`
 - `.cursor/skills/010-language-standards/SKILL.md` (always-on) - Language conventions, formatting
+  - Frontmatter: `name: "010-language-standards"`, `description: "Language conventions, formatting"`, `alwaysApply: true`
 - Layer-specific skills with appropriate globs based on structure
+  - Each should have: `name`, `description`, `globs: ["pattern/**"]`
 - `.cursor/skills/200-testing/SKILL.md` (glob: `tests/**` or test patterns)
+  - Frontmatter: `name: "200-testing"`, `description: "Testing patterns and standards"`, `globs: ["tests/**"]` (or appropriate test pattern)
 - `.cursor/skills/900-new-feature/SKILL.md` (manual) - Workflow for adding features
+  - Frontmatter: `name: "900-new-feature"`, `description: "Workflow for adding features"` (no globs, no alwaysApply)
 - `.cursor/skills/901-update-docs/SKILL.md` (manual) - Documentation checklist
+  - Frontmatter: `name: "901-update-docs"`, `description: "Documentation checklist"` (no globs, no alwaysApply)
 
 ### Commands
 
