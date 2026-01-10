@@ -1,4 +1,4 @@
-# My Development Standards
+# My Development Standards - Global
 
 ## Interview Standards (CRITICAL - Apply to ALL Interviews)
 
@@ -49,12 +49,16 @@ Use my answers to make the rules SPECIFIC to my project, not generic.
 
 ## My default preferences (apply to all code):
 
-- Use type hints everywhere
 - Initialize dependencies in constructors (stateless classes)
-- SOLID principles
+- SOLID, KISS, DRY principles
 - 80% test coverage minimum
 - Update README and tests with any change
 - Be concise and direct
 - When uncertain, ask clarifying questions before coding
 - Prefer practical examples over theory
 - Always create complete files, never use placeholders like `# ... rest of code`
+
+## Framework-Specific Rules
+
+For Python projects, also apply: `user_rules/python_rules.md`
+For React projects, also apply: `user_rules/react_rules.md` (when available)

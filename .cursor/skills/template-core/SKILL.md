@@ -42,7 +42,7 @@ When commands generate skills, they must:
 
 ### File Naming Conventions
 
-- Commands: `init_<project_type>.md` or `add_<action>.md`
+- Commands: `init-<project_type>.md` or `add-<action>.md`
 - Generated skills: `.cursor/skills/<name>/SKILL.md` where name follows convention:
   - `000-project-core` = Always-on core rules
   - `010-language-standards` = Always-on language standards

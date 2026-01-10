@@ -22,10 +22,10 @@ Wait for my answer, then proceed to Step 2.
 Based on my answer, you must:
 
 1. **Access the corresponding command** from User Commands:
-   - `hexagonal-python` → Access User Command `init-hexagonal-python` (or read `user_commands/init_hexagonal_python.md` if available)
-   - `sdk-python` → Access User Command `init-sdk-python` (or read `user_commands/init_sdk_python.md` if available)
-   - `streamlit` → Access User Command `init-streamlit` (or read `user_commands/init_streamlit.md` if available)
-   - `react-frontend` → Access User Command `init-react-frontend` (or read `user_commands/init_react_frontend.md` if available)
+   - `hexagonal-python` → Access User Command `init-hexagonal-python` (or read `user_commands/init-hexagonal-python.md` if available)
+   - `sdk-python` → Access User Command `init-sdk-python` (or read `user_commands/init-sdk-python.md` if available)
+   - `streamlit` → Access User Command `init-streamlit` (or read `user_commands/init-streamlit.md` if available)
+   - `react-frontend` → Access User Command `init-react-frontend` (or read `user_commands/init-react-frontend.md` if available)
    - `custom` → Use detailed interview (see below)
 
    **Note:** These commands should be set up as User Commands in Cursor Settings. If they're not available, try reading the files from `user_commands/` directory in the workspace, or prompt the user to set them up.

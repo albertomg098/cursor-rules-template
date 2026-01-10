@@ -21,10 +21,10 @@ Wait for my answer, then proceed.
 Based on my answer, you must:
 
 1. **Read the corresponding command file** from `user_commands/`:
-   - `hexagonal-python` → Read `init_hexagonal_python.md`
-   - `sdk-python` → Read `init_sdk_python.md`
-   - `streamlit` → Read `init_streamlit.md`
-   - `react-frontend` → Read `init_react_frontend.md`
+   - `hexagonal-python` → Read `init-hexagonal-python.md`
+   - `sdk-python` → Read `init-sdk-python.md`
+   - `streamlit` → Read `init-streamlit.md`
+   - `react-frontend` → Read `init-react-frontend.md`
 
 2. **Provide a comprehensive explanation** covering:
 

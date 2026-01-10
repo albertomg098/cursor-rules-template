@@ -31,16 +31,21 @@ Instead of manually writing Cursor rules for each project, this toolkit uses an 
 **No cloning needed!** Just copy/paste directly from GitHub. This is a one-time setup that works for all your projects.
 
 1. **Set global rules** (applies to ALL projects)
-   - Open `user_rules/global_rules.md` on GitHub
-   - Copy entire contents (click "Raw" button for clean copy)
-   - Paste into **Cursor Settings → Rules** (`Ctrl+,` → search "Rules")
+   - **General rules:** Open `user_rules/global_rules.md` on GitHub
+     - Copy entire contents (click "Raw" button for clean copy)
+     - Paste into **Cursor Settings → Rules** (`Ctrl+,` → search "Rules")
+   - **Python-specific rules:** Open `user_rules/python_rules.md` on GitHub
+     - Copy entire contents and append to the same Rules field in Cursor Settings
+   - **React-specific rules:** (when available) Open `user_rules/react_rules.md` and append
    - Save
+   
+   **Note:** You can combine multiple rule files by copying them all into the same Rules field, or keep them separate if you prefer. The general `global_rules.md` should always be included.
 
 2. **Create global commands** ⚠️ **REQUIRED for router to work**
    
    The files in `user_commands/` are markdown prompts that **MUST be set up as User Commands** in Cursor Settings. This is required because:
    - ✅ You can easily access `setup-project` in any project via `/setup-project`
-   - ✅ The router can access the other `init_*.md` files when routing
+   - ✅ The router can access the other `init-*.md` files when routing
    - ❌ **Without this, the router will fail** when trying to route to specific project types
    
    **Steps:**
@@ -54,19 +59,19 @@ Instead of manually writing Cursor rules for each project, this toolkit uses an 
      
      **Supporting Commands (Required for router):**
      - ✅ **Command name:** `init-hexagonal-python`
-     - ✅ **Content:** Copy from `user_commands/init_hexagonal_python.md` on GitHub
+     - ✅ **Content:** Copy from `user_commands/init-hexagonal-python.md` on GitHub
 
 
      - ✅ **Command name:** `init-sdk-python`
-     - ✅ **Content:** Copy from `user_commands/init_sdk_python.md` on GitHub
+     - ✅ **Content:** Copy from `user_commands/init-sdk-python.md` on GitHub
 
 
      - ✅ **Command name:** `init-streamlit`
-     - ✅ **Content:** Copy from `user_commands/init_streamlit.md` on GitHub
+     - ✅ **Content:** Copy from `user_commands/init-streamlit.md` on GitHub
 
 
      - ✅ **Command name:** `init-react-frontend`
-     - ✅ **Content:** Copy from `user_commands/init_react_frontend.md` on GitHub
+     - ✅ **Content:** Copy from `user_commands/init-react-frontend.md` on GitHub
    
    **⚠️ Critical:** The `setup-project` command acts as a router and **requires** these commands to be set up as User Commands. Without them, routing will fail.
 
@@ -92,7 +97,7 @@ For **any new or existing project**:
 
 **That's it!** Your project now has tailored Cursor rules and commands.
 
-**Note:** If you haven't set up the global commands (Step 2), the router might not be able to access the `init_*.md` files. Make sure to complete the setup!
+**Note:** If you haven't set up the global commands (Step 2), the router might not be able to access the `init-*.md` files. Make sure to complete the setup!
 
 ---
 
@@ -104,7 +109,7 @@ For **any new or existing project**:
 ┌─────────────────────────────────────────────────────────┐
 │  1. One-Time Setup (Do Once)                           │
 │     • Copy global_rules.md → Cursor Settings → Rules    │
-│     • Set up User Commands (setup-project + init_*.md)  │
+│     • Set up User Commands (setup-project + init-*.md)  │
 └─────────────────────────────────────────────────────────┘
                         ↓
 ┌─────────────────────────────────────────────────────────┐
@@ -157,15 +162,17 @@ cursor-rules-template/
 ├── PLAN.md                      # Implementation plan
 │
 ├── user_rules/                  # Global rules (one-time setup)
-│   └── global_rules.md          # Copy to Cursor Settings → Rules
+│   ├── global_rules.md          # General behavior and patterns (copy to Cursor Settings → Rules)
+│   ├── python_rules.md          # Python-specific standards (append to Rules)
+│   └── react_rules.md           # React-specific standards (when available, append to Rules)
 │
 ├── user_commands/               # Templates for generating YOUR project commands
 │   ├── README.md                # Command index
 │   ├── setup-project.md         # Main entry point (router)
-│   ├── init_hexagonal_python.md # Hexagonal Python quick-start
-│   ├── init_sdk_python.md       # Python SDK quick-start
-│   ├── init_streamlit.md        # Streamlit quick-start
-│   ├── init_react_frontend.md   # React quick-start
+│   ├── init-hexagonal-python.md # Hexagonal Python quick-start
+│   ├── init-sdk-python.md       # Python SDK quick-start
+│   ├── init-streamlit.md        # Streamlit quick-start
+│   ├── init-react-frontend.md   # React quick-start
 │   ├── create-or-refine-tests-template.md # Template for test command (auto-generated for Python projects)
 │   └── create-github-workflow-template.md # Template for CI/CD workflows (optional)
 │
@@ -174,6 +181,7 @@ cursor-rules-template/
     │   ├── add-project-type.md  # Add new project type support
     │   ├── modify-project-type.md # Modify/extend existing project type
     │   ├── explore-project-type.md # Understand project types
+    │   ├── add-framework-rules.md # Add framework/language global rules
     │   └── add-skill.md         # Add skill to other projects
     └── skills/                  # Rules for working on this repo
         ├── template-core/       # Core template rules
@@ -257,7 +265,7 @@ Cursor has two distinct systems that work together:
 4. **Paste** into Cursor chat
 5. Follow same interview process as above
 
-**Note:** Copy/paste works, but the router functionality may be limited. For best results, set up the global commands (Step 2 of Quick Start) so the router can access the `init_*.md` files.
+**Note:** Copy/paste works, but the router functionality may be limited. For best results, set up the global commands (Step 2 of Quick Start) so the router can access the `init-*.md` files.
 
 ### Setting Up an Existing Project
 
@@ -275,7 +283,7 @@ Same process as new projects. Existing skills won't be overwritten unless you ex
 
 **Template Repo Commands** (`.cursor/commands/` in this repo):
 - Used ONLY when working on THIS template repo
-- Examples: `/add-project-type`, `/modify-project-type`, `/explore-project-type`, `/add-skill`
+- Examples: `/add-project-type`, `/modify-project-type`, `/explore-project-type`, `/add-framework-rules`, `/add-skill`
 - Type `/` in Cursor when working in this template repo to see them
 
 **Project-Generated Commands** (`.cursor/commands/` in YOUR projects):
@@ -331,7 +339,7 @@ To add support for a new architecture (e.g., Next.js, Vue, Django):
    - Command filename
    - Router option name
 5. **Command automatically:**
-   - Creates new `init_<type>.md` file in `user_commands/`
+   - Creates new `init-<type>.md` file in `user_commands/`
    - Updates `user_commands/README.md` index
    - Updates `user_commands/setup-project.md` routing
    - No manual steps required!
@@ -351,7 +359,7 @@ To adjust an existing project type to match your standards and architecture:
    - Interview questions review
    - Key principles review
 6. **Review the modification plan** and confirm changes
-7. **Command automatically updates** the `init_*.md` file in `user_commands/`
+7. **Command automatically updates** the `init-*.md` file in `user_commands/`
 
 This is useful when:
 - Your architecture differs from the default implementation
@@ -372,11 +380,37 @@ To understand what a project type includes:
 ### Updating Global Rules
 
 1. **Clone this repo** (only needed for updating)
-2. Edit `user_rules/global_rules.md` in the cloned repo
+2. Edit the relevant rule file(s) in `user_rules/`:
+   - `global_rules.md` - General behavior and patterns
+   - `python_rules.md` - Python-specific standards
+   - `react_rules.md` - React-specific standards (when available)
+   - Or use `/add-framework-rules` to create new framework/language rules
 3. Copy updated contents to Cursor Settings → Rules
+   - If you've split them, update the corresponding section
+   - If combined, replace the entire Rules field
 4. Commit changes to version control (optional)
 
 **Note:** After updating global rules, they apply to all projects automatically.
+
+**Rule File Structure:**
+- `global_rules.md` - Always include this (interview standards, general preferences)
+- `python_rules.md` - Include for Python projects (type hints, async patterns, testing)
+- `react_rules.md` - Include for React projects (when available)
+- Other framework/language rules - Use `/add-framework-rules` command to create new ones
+
+### Adding Framework/Language Rules
+
+To add global rules for a new framework or language (e.g., React, TypeScript, Go):
+
+1. **Clone this repo** (only needed for extending)
+2. **Open the cloned repo** in Cursor
+3. **Type `/add-framework-rules`** in Cursor chat
+4. **Answer the interview questions** about your framework/language standards
+5. **Command automatically:**
+   - Creates new rule file in `user_rules/` (e.g., `react_rules.md`)
+   - Updates `global_rules.md` to reference the new file
+   - Updates `user_rules/README.md` with the new rule file
+   - No manual steps required!
 
 ---
 
@@ -404,7 +438,7 @@ This toolkit uses a **router pattern** with **markdown prompt files**:
 
 The files in `user_commands/` are markdown prompts that **must be set up as User Commands** in Cursor Settings → User Commands. This is required because:
 
-1. **Router Access:** The `setup-project` command acts as a router and needs to access the `init_*.md` files. Without setting them up as User Commands, the router cannot route properly.
+1. **Router Access:** The `setup-project` command acts as a router and needs to access the `init-*.md` files. Without setting them up as User Commands, the router cannot route properly.
 
 2. **Easy Access:** Setting them up as User Commands allows you to type `/setup-project` in any project instead of copying/pasting.
 
@@ -459,7 +493,8 @@ This is a template repository designed to be customized for your needs. To exten
 
 1. Use `/add-project-type` to add new project types
 2. Use `/modify-project-type` to adjust existing project types to match your standards
-3. Edit `user_rules/global_rules.md` to update your coding standards
+3. Use `/add-framework-rules` to add framework/language-specific global rules (e.g., React, TypeScript, Go)
+4. Edit `user_rules/global_rules.md` or framework-specific rule files to update your coding standards
 4. Create custom commands in `user_commands/` for your workflows
 5. Share improvements back to the community if desired
 
@@ -479,7 +514,7 @@ This is a template repository designed to be customized for your needs. To exten
 A: Global rules and commands are set once. For each project, just type `/setup-project` (or use the command) to generate project-specific rules.
 
 **Q: Why do I need to set up User Commands?**  
-A: The `setup-project` command acts as a router and needs to access the `init_*.md` files. Setting them up as User Commands ensures the router can find and execute them properly. Without this, the router might fail when trying to route to specific project types.
+A: The `setup-project` command acts as a router and needs to access the `init-*.md` files. Setting them up as User Commands ensures the router can find and execute them properly. Without this, the router might fail when trying to route to specific project types.
 
 **Q: Can I just copy/paste instead of setting up commands?**  
 A: Yes, but the router functionality might not work properly. The router needs to access other commands, so it's recommended to set them up as User Commands for full functionality.
