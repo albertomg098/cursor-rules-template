@@ -28,13 +28,38 @@ Create `.cursor/skills/{{name}}/SKILL.md` with:
 1. **Create folder:** `.cursor/skills/{{name}}/`
 2. **Create file:** `SKILL.md` inside that folder
 3. **Frontmatter** (at top of SKILL.md):
+   
+   **Always-on skill:**
    ```yaml
    ---
+   name: "{{name from Q5}}"
    description: "{{description from Q1}}"
-   globs: ["{{glob from Q3}}"]  # Only if auto-attach
-   alwaysApply: true/false      # Based on Q2
+   alwaysApply: true
    ---
    ```
+   
+   **Auto-attach skill:**
+   ```yaml
+   ---
+   name: "{{name from Q5}}"
+   description: "{{description from Q1}}"
+   globs: ["{{glob from Q3}}"]
+   ---
+   ```
+   
+   **Manual skill:**
+   ```yaml
+   ---
+   name: "{{name from Q5}}"
+   description: "{{description from Q1}}"
+   ---
+   ```
+   
+   **Important:** 
+   - `name` is REQUIRED - use the skill name from Q5
+   - `description` is REQUIRED - use description from Q1
+   - `globs` is OPTIONAL - only include if auto-attaching to file patterns (mutually exclusive with `alwaysApply`)
+   - `alwaysApply` is OPTIONAL - only include if this is an always-on skill (true). Mutually exclusive with `globs`. For manual skills, omit both `globs` and `alwaysApply`.
 
 4. **Content:**
    - Clear title

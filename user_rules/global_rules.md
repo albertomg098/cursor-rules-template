@@ -58,6 +58,32 @@ Use my answers to make the rules SPECIFIC to my project, not generic.
 - Prefer practical examples over theory
 - Always create complete files, never use placeholders like `# ... rest of code`
 
+## Code Generation Principles (CRITICAL)
+
+**Minimal Code Approach:**
+- **Write the LEAST amount of code possible** to solve the request
+- Avoid over-engineering or adding unnecessary abstractions
+- Prefer simple, direct solutions over complex patterns unless complexity is required
+- Don't add features or code "just in case" - only what's needed for the current request
+- If multiple approaches exist, choose the simplest one that meets requirements
+- Remove any code that doesn't directly contribute to solving the problem
+
+**Always Test Changes:**
+- **MANDATORY:** After making ANY code changes, write or update tests
+- Test the specific functionality that was changed
+- Ensure existing tests still pass (don't break existing functionality)
+- If adding new features, add corresponding tests
+- If refactoring, update tests to match the new structure
+- Run tests to verify changes work correctly before considering the task complete
+- If tests don't exist, create them following project testing patterns
+
+**Workflow:**
+1. Understand the request/question
+2. Write minimal code to solve it
+3. Write/update tests for the changes
+4. Verify tests pass
+5. Only then consider the task complete
+
 ## Framework-Specific Rules
 
 For Python projects, also apply: `user_rules/python_rules.md`
