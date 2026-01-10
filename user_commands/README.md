@@ -14,10 +14,10 @@ These commands are called internally by `setup-project.md`. You don't need to us
 
 | Command | Project Type |
 |---------|--------------|
-| `init_hexagonal_python.md` | Python backend with hexagonal architecture (FastAPI + Airflow) |
-| `init_sdk_python.md` | Python SDK/Library/Component package |
-| `init_streamlit.md` | Streamlit MVP application |
-| `init_react_frontend.md` | React frontend application (Vite/Next.js) |
+| `init-hexagonal-python.md` | Python backend with hexagonal architecture (FastAPI + Airflow) |
+| `init-sdk-python.md` | Python SDK/Library/Component package |
+| `init-streamlit.md` | Streamlit MVP application |
+| `init-react-frontend.md` | React frontend application (Vite/Next.js) |
 
 ## Command Templates
 
@@ -37,6 +37,7 @@ These are **actual Cursor commands** accessible via `/` when working on the temp
 | `/add-project-type` | Create new quick-start command | Want to add support for new project type (e.g., Next.js, Vue, JavaScript, etc.) |
 | `/modify-project-type` | Adjust existing project type to match your standards | Want to customize an existing project type (e.g., modify `sdk-python` to match your architecture) |
 | `/explore-project-type` | Understand a project type's structure and rules | Want to learn about a project type's standards and patterns |
+| `/add-framework-rules` | Create framework/language-specific global rules | Want to add global rules for a new framework/language (e.g., React, TypeScript, Go) |
 | `/add-skill` | Add single skill to other projects | Need to add a skill to a project (not template repo) |
 
 **Note:** These commands automatically update index files - no manual steps needed!

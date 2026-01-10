@@ -25,7 +25,7 @@ This command will:
 ### Phase 2: Explore Current Implementation
 
 2. **Question 2/12:** 🔍 Use `/explore-project-type` to get comprehensive information about the selected project type.
-   - Read the corresponding `init_*.md` file from `user_commands/`
+   - Read the corresponding `init-*.md` file from `user_commands/`
    - Understand the current structure, skills, patterns, and interview questions
    - Prepare to compare against user's standards
 
@@ -109,7 +109,7 @@ After completing all questions:
 
 ## Generate Updated Command File
 
-If confirmed, update `user_commands/init_{{project_type}}.md`:
+If confirmed, update `user_commands/init-{{project_type}}.md`:
 
 1. **Update Structure section** (if needed)
    - Modify folder structure based on answers

@@ -28,7 +28,7 @@ Ask ONE at a time:
    - Testing skills
    - Manual workflow skills
 
-8. **Question 8/9:** 📝 What should the command filename be? (e.g., `init_nextjs.md`, `init_vue.md`, `init_javascript.md`)
+8. **Question 8/9:** 📝 What should the command filename be? (e.g., `init-nextjs.md`, `init-vue.md`, `init-javascript.md`)
 
 9. **Question 9/9:** ⚙️ What option name should appear in the router? (e.g., "nextjs", "vue", "javascript" - used in `setup-project.md` routing)
 

@@ -13,14 +13,16 @@ cursor-rules-toolkit/
 ├── README.md                           # Usage guide and setup instructions
 ├── PLAN.md                             # This file - implementation plan
 ├── user_rules/
-│   └── global_rules.md                 # Copy to Cursor Settings → Rules
+│   ├── global_rules.md                 # General behavior and patterns (copy to Cursor Settings → Rules)
+│   ├── python_rules.md                 # Python-specific standards (append to Rules)
+│   └── react_rules.md                   # React-specific standards (when available, append to Rules)
 └── user_commands/
     ├── README.md                       # Index of available commands
     ├── init_project_rules.md           # Main command: interview + generate all rules
-    ├── init_hexagonal_python.md        # Quick start for hexagonal FastAPI/Airflow
-    ├── init_sdk_python.md              # Quick start for Python SDK/components
-    ├── init_streamlit.md               # Quick start for Streamlit MVP
-    ├── init_react_frontend.md          # Quick start for React production
+    ├── init-hexagonal-python.md        # Quick start for hexagonal FastAPI/Airflow
+    ├── init-sdk-python.md              # Quick start for Python SDK/components
+    ├── init-streamlit.md               # Quick start for Streamlit MVP
+    ├── init-react-frontend.md          # Quick start for React production
     └── add_rule.md                     # Add a single rule to existing project
 ```
 
@@ -49,26 +51,85 @@ cursor-rules-toolkit/
 
 ### 2. user_rules/global_rules.md
 
-**Purpose:** Global preferences that apply to ALL coding projects
+**Purpose:** General behavior and patterns that apply to ALL coding projects
 
 **Content Requirements:**
-- Keep under 100 lines (loaded on every prompt)
-- Personal coding standards (type hints, OOP patterns, SOLID, DRY, KISS)
-- Python specifics (3.11+, annotations, import order, async/await)
+- Keep focused on general patterns (interview standards, SOLID, KISS, DRY)
+- Framework-agnostic preferences
 - General behavior (concise, ask questions, practical examples, no placeholders)
 - Testing requirements (80% coverage minimum)
 - Documentation requirements (update README/tests with changes)
 
 **Structure:**
 ```markdown
-# My Development Standards
+# My Development Standards - Global
+
+## Interview Standards (CRITICAL - Apply to ALL Interviews)
+[Interview standards]
 
 ## When I say "setup cursor rules" or "init project rules":
 [Interview questions and generation workflow]
 
 ## My default preferences (apply to all code):
-[Standards list]
+[General standards list]
+
+## Framework-Specific Rules
+[Reference to python_rules.md, react_rules.md, etc.]
 ```
+
+### 3. user_rules/python_rules.md
+
+**Purpose:** Python-specific coding standards
+
+**Content Requirements:**
+- Type hints requirements
+- Python version and features (3.11+)
+- Async/await patterns
+- Error handling patterns
+- Testing standards (pytest, fixtures, mocking)
+- Code style (PEP 8, Black/Ruff)
+- Project structure guidelines
+- Performance considerations
+
+**Structure:**
+```markdown
+# My Development Standards - Python
+
+## Type System
+[Type hints, typing module, mypy]
+
+## Code Style
+[PEP 8, naming, docstrings]
+
+## Async/Await Patterns
+[Async patterns, libraries]
+
+## Error Handling
+[Exception patterns]
+
+## Testing
+[pytest, fixtures, mocking, coverage]
+
+## Dependencies
+[Version pinning, virtual environments]
+
+## Project Structure
+[src/ layout, package structure]
+
+## Performance
+[Profiling, generators, caching]
+```
+
+### 4. user_rules/react_rules.md (Future)
+
+**Purpose:** React-specific coding standards
+
+**Content Requirements:**
+- TypeScript standards
+- Component patterns
+- State management
+- Testing patterns
+- Styling conventions
 
 ### 3. user_commands/README.md
 
@@ -83,7 +144,7 @@ cursor-rules-toolkit/
 - Usage instructions (how to paste commands)
 - Command categories (full setup vs quick-start vs utilities)
 
-### 4. user_commands/init_project_rules.md
+### 5. user_commands/init_project_rules.md
 
 **Purpose:** Main command for comprehensive rule generation
 
@@ -114,7 +175,7 @@ cursor-rules-toolkit/
 - Project-specific customization (use actual names, entities, services)
 - Complete file generation (no placeholders)
 
-### 5. user_commands/init_hexagonal_python.md
+### 6. user_commands/init-hexagonal-python.md
 
 **Purpose:** Quick-start for Python hexagonal architecture
 
@@ -175,7 +236,7 @@ src/
 - Clear constraints (DO/DON'T)
 - WHY explanations
 
-### 6. user_commands/init_sdk_python.md
+### 7. user_commands/init-sdk-python.md
 
 **Purpose:** Quick-start for Python SDK/Library projects
 
@@ -215,7 +276,7 @@ src/
 - `900-api-changes.mdc` (Manual) - Breaking change workflow
 - `901-release.mdc` (Manual) - Publishing workflow
 
-### 7. user_commands/init_streamlit.md
+### 8. user_commands/init-streamlit.md
 
 **Purpose:** Quick-start for Streamlit MVP applications
 
@@ -240,7 +301,7 @@ config/
 - `120-services.mdc` (Auto: src/services/**) - Business logic
 - `200-testing.mdc` (Auto: tests/**) - Testing patterns
 
-### 8. user_commands/init_react_frontend.md
+### 9. user_commands/init-react-frontend.md
 
 **Purpose:** Quick-start for production React applications
 
@@ -278,7 +339,7 @@ src/
 - `200-testing.mdc` (Auto: **/*.test.tsx)
 - `300-styling.mdc` (Auto: *.css, tailwind)
 
-### 9. user_commands/add_rule.md
+### 10. user_commands/add_rule.md
 
 **Purpose:** Add a single rule to existing project
 
@@ -385,8 +446,9 @@ For each rule template:
 ### Phase 1: Foundation
 1. Create repository structure
 2. Write README.md
-3. Create user_rules/global_rules.md
-4. Create user_commands/README.md
+3. Create user_rules/global_rules.md (general rules)
+4. Create user_rules/python_rules.md (Python-specific rules)
+5. Create user_commands/README.md
 
 ### Phase 2: Main Command
 1. Implement init_project_rules.md with full interview
@@ -394,10 +456,10 @@ For each rule template:
 3. Test command with sample projects
 
 ### Phase 3: Quick-Start Commands
-1. Implement init_hexagonal_python.md
-2. Implement init_sdk_python.md
-3. Implement init_streamlit.md
-4. Implement init_react_frontend.md
+1. Implement init-hexagonal-python.md
+2. Implement init-sdk-python.md
+3. Implement init-streamlit.md
+4. Implement init-react-frontend.md
 
 ### Phase 4: Utilities
 1. Implement add_rule.md
