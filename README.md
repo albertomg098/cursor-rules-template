@@ -26,9 +26,9 @@ Instead of manually writing Cursor rules for each project, this toolkit uses an 
 
 ## 🚀 Quick Start
 
-### One-Time Setup (10 minutes)
+### One-Time Setup (~10 minutes)
 
-**No cloning needed!** Just copy/paste directly from GitHub.
+**No cloning needed!** Just copy/paste directly from GitHub. This is a one-time setup that works for all your projects.
 
 1. **Set global rules** (applies to ALL projects)
    - Open `user_rules/global_rules.md` on GitHub
@@ -67,7 +67,7 @@ Instead of manually writing Cursor rules for each project, this toolkit uses an 
    
    **⚠️ Critical:** The `setup-project` command acts as a router and **requires** these commands to be set up as User Commands. Without them, routing will fail.
 
-**That's it!** Once set up, you can use `/setup-project` in any project. No need to keep the repo accessible.
+**That's it!** Once set up, you can use `/setup-project` in any project. The repo doesn't need to stay accessible - everything is copied to Cursor Settings.
 
 ### Use in Your Projects
 
@@ -89,7 +89,7 @@ For **any new or existing project**:
 
 **That's it!** Your project now has tailored Cursor rules and commands.
 
-**Note:** If you haven't set up the global commands, the router might not be able to access the `init_*.md` files. Make sure to complete Step 3 of the setup!
+**Note:** If you haven't set up the global commands (Step 2), the router might not be able to access the `init_*.md` files. Make sure to complete the setup!
 
 ---
 
@@ -99,34 +99,42 @@ For **any new or existing project**:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  1. One-Time Setup                                       │
-│     Copy global_rules.md → Cursor Settings → Rules      │
+│  1. One-Time Setup (Do Once)                           │
+│     • Copy global_rules.md → Cursor Settings → Rules    │
+│     • Set up User Commands (setup-project + init_*.md)  │
 └─────────────────────────────────────────────────────────┘
                         ↓
 ┌─────────────────────────────────────────────────────────┐
-│  2. For Each Project                                     │
-│     Paste setup-project.md → Answer questions           │
+│  2. For Each Project (Repeat as Needed)                 │
+│     • Type /setup-project in Cursor chat                │
+│     • Answer interview questions                        │
 └─────────────────────────────────────────────────────────┘
                         ↓
 ┌─────────────────────────────────────────────────────────┐
-│  3. Generated Output                                     │
-│     • Skills (rules) in .cursor/skills/<name>/SKILL.md  │
-│     • Commands in .cursor/commands/<name>.md            │
+│  3. Generated Output (In YOUR Project)                  │
+│     • Skills: .cursor/skills/<name>/SKILL.md           │
+│     • Commands: .cursor/commands/<name>.md             │
+│     • All customized for your project!                 │
 └─────────────────────────────────────────────────────────┘
 ```
 
-### What Gets Generated
+### What Gets Generated (In YOUR Project)
 
-**Skills (Rules)** - `.cursor/skills/<name>/SKILL.md`
-- Architecture patterns and guidelines
+**Skills (Rules)** - `.cursor/skills/<name>/SKILL.md` in YOUR project
+- Architecture patterns and guidelines specific to your project
 - Layer-specific coding standards
 - Auto-activate based on file patterns (via globs)
-- Or always-on for core rules
+- Or always-on for core project rules
 
-**Commands** - `.cursor/commands/<name>.md`
+**Commands** - `.cursor/commands/<name>.md` in YOUR project
 - Reusable workflows accessible via `/` in Cursor chat
 - Project-specific helpers and checklists
-- Custom automation for your project
+- Custom automation tailored to your project structure
+- **Important:** These are generated in YOUR project, not in this template repo
+- **Common examples:**
+  - `/create-or-refine-tests` (always for Python projects)
+  - `/create-use-case`, `/add-entity` (for Hexagonal Python)
+  - `/create-github-workflow` (optional, if you want CI/CD)
 
 ### Supported Project Types
 
@@ -148,17 +156,20 @@ cursor-rules-template/
 ├── user_rules/                  # Global rules (one-time setup)
 │   └── global_rules.md          # Copy to Cursor Settings → Rules
 │
-├── user_commands/               # Commands for YOUR projects
+├── user_commands/               # Templates for generating YOUR project commands
 │   ├── README.md                # Command index
 │   ├── setup-project.md         # Main entry point (router)
 │   ├── init_hexagonal_python.md # Hexagonal Python quick-start
 │   ├── init_sdk_python.md       # Python SDK quick-start
 │   ├── init_streamlit.md        # Streamlit quick-start
-│   └── init_react_frontend.md   # React quick-start
+│   ├── init_react_frontend.md   # React quick-start
+│   ├── create-or-refine-tests-template.md # Template for test command (auto-generated for Python projects)
+│   └── create-github-workflow-template.md # Template for CI/CD workflows (optional)
 │
-└── .cursor/                     # Commands for THIS template repo
-    ├── commands/                # Extend the template (use `/` in this repo)
+└── .cursor/                     # Commands for THIS template repo (use `/` in this repo)
+    ├── commands/                # Template repo commands (NOT project commands)
     │   ├── add-project-type.md  # Add new project type support
+    │   ├── modify-project-type.md # Modify/extend existing project type
     │   ├── explore-project-type.md # Understand project types
     │   └── add-skill.md         # Add skill to other projects
     └── skills/                  # Rules for working on this repo
@@ -170,9 +181,11 @@ cursor-rules-template/
 
 | Location | Purpose | Usage |
 |----------|---------|-------|
-| `user_commands/` | Commands for **your projects** | Copy/paste into Cursor chat in your projects |
-| `.cursor/commands/` | Commands for **this template repo** | Type `/command-name` when working in this repo |
+| `user_commands/` | **Templates** for generating project commands | Used by init commands to generate commands in YOUR projects |
+| `.cursor/commands/` | Commands for **this template repo only** | Type `/command-name` when working in THIS template repo |
 | `user_rules/` | Global rules | Copy to Cursor Settings → Rules (one-time) |
+
+**Important:** Commands in `user_commands/` are TEMPLATES. When you run `/setup-project`, they generate commands in YOUR project's `.cursor/commands/` folder, not in this template repo.
 
 ---
 
@@ -234,26 +247,62 @@ Cursor has two distinct systems that work together:
    - AI will ask follow-ups if answers are unclear
 5. **Verify:** Check `.cursor/skills/` and `.cursor/commands/` folders
 
-**Using Copy/Paste (If commands not set up):**
+**Using Copy/Paste (If global commands not set up):**
 1. **Open your project** in Cursor
 2. **Open Cursor chat** (`Ctrl+L` or `Cmd+L`)
 3. **Copy** entire contents of `user_commands/setup-project.md` from GitHub
 4. **Paste** into Cursor chat
 5. Follow same interview process as above
 
-**Important:** If you use copy/paste, make sure the router can access the `init_*.md` files. They should be set up as User Commands for the router to work properly.
+**Note:** Copy/paste works, but the router functionality may be limited. For best results, set up the global commands (Step 2 of Quick Start) so the router can access the `init_*.md` files.
 
 ### Setting Up an Existing Project
 
 Same process as new projects. Existing skills won't be overwritten unless you explicitly ask to regenerate.
 
-### Adding a Single Skill
+### Adding a Single Skill to Your Project
 
 1. Open your project in Cursor
-2. Copy content from `.cursor/commands/add-skill.md` on GitHub
+2. Copy content from `.cursor/commands/add-skill.md` on GitHub (this is a template repo command, used when working on the template repo)
 3. Paste into chat
 4. Answer questions about what the skill should cover
-5. Single skill folder is created: `.cursor/skills/<name>/SKILL.md`
+5. Single skill folder is created: `.cursor/skills/<name>/SKILL.md` in YOUR project
+
+### Project Commands vs Template Commands
+
+**Template Repo Commands** (`.cursor/commands/` in this repo):
+- Used ONLY when working on THIS template repo
+- Examples: `/add-project-type`, `/modify-project-type`, `/explore-project-type`, `/add-skill`
+- Type `/` in Cursor when working in this template repo to see them
+
+**Project-Generated Commands** (`.cursor/commands/` in YOUR projects):
+- Generated automatically when you run `/setup-project` in your project
+- Examples: `/create-use-case`, `/add-entity`, `/create-or-refine-tests` (for Python projects)
+- Type `/` in Cursor when working in your project to see them
+- These are customized for YOUR project structure, package names, and patterns
+- **Location:** Generated in YOUR project's `.cursor/commands/` folder, not in this template repo
+
+### Project-Generated Commands
+
+When you run `/setup-project`, several commands are automatically generated in your project's `.cursor/commands/` folder:
+
+**Test Creation Command** (`create-or-refine-tests`) - **Always generated for Python projects**
+- Creates, extends, or refines tests following your project's standards
+- Follows your project structure (mirrors src/ with unit/integration/e2e folders)
+- Uses hierarchical conftest.py files
+- Follows initialization strategy for mocking (optional params in constructors)
+- Ensures 80% coverage minimum
+- Customized for your project type (SDK Python, Hexagonal Python)
+
+**CI/CD Workflow Command** (`create-github-workflow`) - **Optional, only if you want it**
+- Creates GitHub Actions workflows in `.github/workflows/`
+- Only generated if you mention CI/CD during project setup
+- Helps create CI/CD workflows following GitHub Actions best practices
+
+**Other Project-Specific Commands** (varies by project type)
+- Hexagonal Python: `/create-use-case`, `/add-entity`, `/create-adapter`, etc.
+- SDK Python: Component-specific commands based on your structure
+- Generated based on your answers during the interview
 
 ---
 
@@ -268,7 +317,7 @@ To add support for a new architecture (e.g., Next.js, Vue, Django):
 1. **Clone this repo** (only needed for extending the template)
 2. **Open the cloned repo** in Cursor
 3. **Type `/add-project-type`** in Cursor chat
-3. **Answer the interview:**
+4. **Answer the interview:**
    - Project type name
    - Typical structure
    - Key layers/components
@@ -278,11 +327,34 @@ To add support for a new architecture (e.g., Next.js, Vue, Django):
    - Skills to generate
    - Command filename
    - Router option name
-4. **Command automatically:**
+5. **Command automatically:**
    - Creates new `init_<type>.md` file in `user_commands/`
    - Updates `user_commands/README.md` index
    - Updates `user_commands/setup-project.md` routing
    - No manual steps required!
+
+### Modifying or Extending Existing Project Types
+
+To adjust an existing project type to match your standards and architecture:
+
+1. **Clone this repo** (only needed for modifying the template)
+2. **Open the cloned repo** in Cursor
+3. **Type `/modify-project-type`** in Cursor chat
+4. **Select** which project type to modify (e.g., `sdk-python`, `hexagonal-python`)
+5. **Answer the interview questions** one by one:
+   - Architecture & structure review
+   - Patterns & conventions review
+   - Skills review
+   - Interview questions review
+   - Key principles review
+6. **Review the modification plan** and confirm changes
+7. **Command automatically updates** the `init_*.md` file in `user_commands/`
+
+This is useful when:
+- Your architecture differs from the default implementation
+- You want to add custom patterns or conventions
+- You need different skills or glob patterns
+- You want to capture additional context during project setup
 
 ### Exploring Existing Project Types
 
@@ -383,9 +455,10 @@ This skill activates automatically when editing files in `src/domain/`.
 This is a template repository designed to be customized for your needs. To extend it:
 
 1. Use `/add-project-type` to add new project types
-2. Edit `user_rules/global_rules.md` to update your coding standards
-3. Create custom commands in `user_commands/` for your workflows
-4. Share improvements back to the community if desired
+2. Use `/modify-project-type` to adjust existing project types to match your standards
+3. Edit `user_rules/global_rules.md` to update your coding standards
+4. Create custom commands in `user_commands/` for your workflows
+5. Share improvements back to the community if desired
 
 ---
 
@@ -418,7 +491,13 @@ A: Type `/` in Cursor chat to see all available commands (both global and projec
 A: Skills activate automatically based on file patterns (globs) or are always-on. Check the frontmatter in each `SKILL.md` file.
 
 **Q: Can I use this with existing projects?**  
-A: Absolutely! Just run `setup-project.md` in any existing project to add Cursor rules and commands.
+A: Absolutely! Just run `/setup-project` (or paste `setup-project.md`) in any existing project to add Cursor rules and commands.
+
+**Q: What commands are generated in my project?**  
+A: For Python projects, `/create-or-refine-tests` is always generated. Other commands depend on your project type and answers. CI/CD workflow command is optional and only generated if you want it.
+
+**Q: Where are project commands generated?**  
+A: In YOUR project's `.cursor/commands/` folder, not in this template repo. Type `/` in Cursor when working in your project to see them.
 
 ---
 

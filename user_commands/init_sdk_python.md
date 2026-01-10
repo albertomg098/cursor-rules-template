@@ -4,13 +4,31 @@ Quick-start for Python SDK/Library projects with components architecture.
 
 ## Interview
 
+**CRITICAL:** Follow interview standards - ONE question at a time, show progress (X/TOTAL), use emojis, wait for answer before proceeding.
+
 Ask ONE at a time:
 
-1. **Package name?** (e.g., "myclient", will be used as `src/myclient/`)
+### Project Basics
 
-2. **Main components?** (e.g., "auth, api_client, webhooks")
+1. **Question 1/8:** 🎯 Package name? (e.g., "myclient", will be used as `src/myclient/`)
 
-3. **External dependencies?** (list main libraries: requests, httpx, etc.)
+2. **Question 2/8:** 🏗️ Main components? (e.g., "client, server, evaluation" - these become top-level folders)
+
+3. **Question 3/8:** 🔌 Optional extensions/plugins? (e.g., "webhooks, middleware" - these go in `extensions/` folder, or "none")
+
+4. **Question 4/8:** 📦 External dependencies? (list main libraries: requests, httpx, pydantic, etc.)
+
+### Development Practices
+
+5. **Question 5/8:** 🧪 Testing framework? (Confirm: pytest, or specify other)
+   - Follow-up: "What's your test coverage target?" (Default: 80% minimum)
+
+6. **Question 6/8:** 🔍 Code quality tools? (Confirm: pylint, or specify: Black, Ruff, mypy, etc.)
+   - Follow-up: "Any pre-commit hooks?"
+
+7. **Question 7/8:** 📝 Versioning strategy? (Confirm: Semantic versioning via CI/CD or GitHub workflows, or specify other)
+
+8. **Question 8/8:** 📚 Documentation approach? (Confirm: numpy-style docstrings with examples in docstrings, or specify other)
 
 ## Generate Structure
 
@@ -18,51 +36,109 @@ Ask ONE at a time:
 src/
 ├── {{package_name}}/
 │   ├── __init__.py         # Public API exports only
-│   ├── client.py           # Main client class
-│   ├── config.py           # Configuration
-│   ├── exceptions.py       # Exception hierarchy
-│   ├── core/               # Core functionality
-│   │   ├── base.py         # Base classes
-│   │   └── protocols.py    # Interfaces for extensibility
-│   ├── components/         # Pluggable components
+│   ├── core/               # Domain-like core (always present)
+│   │   ├── exceptions/     # Exception hierarchy (folder)
+│   │   ├── models/         # Data models (folder)
+│   │   ├── config/         # Configuration (folder, or top-level if complex)
+│   │   └── base/           # Base classes and ABC interfaces for extensibility
+│   ├── {{component_1}}/    # Main component (e.g., client/, server/, evaluation/)
+│   │   ├── __init__.py     # Export main classes
+│   │   └── ...             # All component-related scripts
+│   ├── {{component_2}}/    # Another main component
 │   │   ├── __init__.py
-│   │   ├── component_a/
-│   │   └── component_b/
-│   ├── models/             # Data models
-│   └── _internal/          # Private implementation
+│   │   └── ...
+│   ├── extensions/         # Optional extensions/plugins (if Q3 answered)
+│   │   ├── __init__.py
+│   │   └── ...             # Extension modules
+│   └── _internal/          # Private implementation (optional)
 ├── tests/
-└── docs/
+│   ├── unit/               # Unit tests (mirror src/ structure)
+│   ├── integration/        # Integration tests (mirror src/ structure)
+│   ├── e2e/                # End-to-end tests (if needed)
+│   └── conftest.py         # Root-level conftest (hierarchical conftest.py in subfolders)
+└── docs/                   # Documentation
 ```
 
 ## Generate Skills
 
-Create skills in `.cursor/skills/<name>/SKILL.md` format:
+Create skills in `.cursor/skills/<name>/SKILL.md` format. Skills should be context-dependent: decide whether to apply always, auto-attach based on file patterns, or make manual.
 
 ### Always-On Skills
-- `.cursor/skills/000-package-core/SKILL.md` - SDK design principles: public API = `__init__.py` exports, `_internal/` is private, deprecate before removing (min 1 minor version)
-- `.cursor/skills/010-python-standards/SKILL.md` - Python conventions, type hints, annotations
+- `.cursor/skills/000-package-core/SKILL.md` - SDK design principles: public API = `__init__.py` exports, component folders with `__init__.py`, `_internal/` is private, deprecate before removing (min 1 minor version), SOLID/DRY/KISS principles, manual dependency injection via constructors
+- `.cursor/skills/010-python-standards/SKILL.md` - Python conventions, type hints always required, numpy-style docstrings with examples, pylint compliance
 
-### Auto-Attach Skills
-- `.cursor/skills/100-public-api/SKILL.md` (glob: `src/{{package}}/__init__.py`, `src/{{package}}/client.py`) - Export rules, API stability, versioning
-- `.cursor/skills/110-core/SKILL.md` (glob: `src/{{package}}/core/**`) - Core patterns, Protocol-based interfaces
-- `.cursor/skills/120-components/SKILL.md` (glob: `src/{{package}}/components/**`) - Component structure, ports/adapters for extensibility
-- `.cursor/skills/130-models/SKILL.md` (glob: `src/{{package}}/models/**`) - Data models, Pydantic schemas
-- `.cursor/skills/140-exceptions/SKILL.md` (glob: `src/{{package}}/exceptions.py`) - Exception hierarchy, custom exceptions
-- `.cursor/skills/200-testing/SKILL.md` (glob: `tests/**`) - Testing patterns, mocking external APIs
-- `.cursor/skills/300-documentation/SKILL.md` (glob: `docs/**`, `README.md`) - Doc standards, examples in docstrings
+### Auto-Attach Skills (based on file patterns)
+- `.cursor/skills/100-public-api/SKILL.md` (glob: `src/{{package}}/__init__.py`) - Export rules, API stability, versioning, only export from component `__init__.py` files
+- `.cursor/skills/110-core/SKILL.md` (glob: `src/{{package}}/core/**`) - Core patterns, ABC-based interfaces (not Protocol), domain-like structure, exceptions in `core/exceptions/`, models in `core/models/`, config in `core/config/`, base classes and ABCs in `core/base/`
+- `.cursor/skills/120-{{component}}/SKILL.md` (glob: `src/{{package}}/{{component}}/**`) - Generate ONE skill per component: component structure (folder with `__init__.py` and related scripts), manual DI via constructors, optional params for testing/mocking, stateless classes
+- `.cursor/skills/130-extensions/SKILL.md` (glob: `src/{{package}}/extensions/**`) - Extension/plugin patterns, ABC-based interfaces for extensibility
+- `.cursor/skills/200-testing/SKILL.md` (glob: `tests/**`) - Testing patterns: structure mirrors src/ with unit/, integration/, e2e/, hierarchical conftest.py files, initialization strategy for mocking, mocks in conftest, pytest, 80% coverage minimum
+- `.cursor/skills/300-documentation/SKILL.md` (glob: `docs/**`, `README.md`) - Documentation standards: numpy-style docstrings with examples, attractive README with setup, main entrypoints, functionalities
 
 ### Manual Skills
 - `.cursor/skills/900-api-changes/SKILL.md` - Breaking change workflow: deprecation → new version → removal
-- `.cursor/skills/901-release/SKILL.md` - Publishing workflow: version bump → changelog → tests → publish
+- `.cursor/skills/901-release/SKILL.md` - Publishing workflow: semantic versioning via CI/CD or GitHub workflows, version bump → changelog → tests → publish
 
 ## Key Principles in Skills
 
-- Public API = what's exported from `__init__.py`
+- **Public API** = what's exported from package `__init__.py` and component `__init__.py` files
+- **Component structure** = each component is a folder with `__init__.py` and related scripts (no standalone files)
+- **Core folder** = domain-like structure with `exceptions/`, `models/`, `config/`, `base/` subfolders
+- **Extensibility** = always via ABC (Abstract Base Classes), not Protocol
+- **Dependency injection** = manual DI via constructors, optional params for testing/mocking
+- **Testing** = structure mirrors src/ with unit/, integration/, e2e/, hierarchical conftest.py, initialization strategy for mocking
+- **Documentation** = numpy-style docstrings with examples, attractive README with setup, entrypoints, functionalities
+- **Code quality** = type hints always required, pylint, SOLID/DRY/KISS principles
+- **Testing coverage** = 80% minimum
+- **Versioning** = semantic versioning via CI/CD or GitHub workflows
 - `_internal/` can change without notice
-- Components follow ports/adapters for extensibility
-- Every public function has docstrings with examples
-- Deprecation warnings before breaking changes
+- Deprecation warnings before breaking changes (min 1 minor version)
+
+## Skill Content Requirements
+
+Each skill MUST:
+- Use MY actual package name and components in examples
+- Include real code examples (not pseudo-code)
+- Show DO/DON'T patterns
+- Explain WHY (testability, maintainability, SOLID/DRY/KISS)
+- Reference actual libraries I'm using
+- Emphasize key patterns:
+  - ABC classes for interfaces (not Protocol)
+  - Component folders with `__init__.py`
+  - Manual dependency injection
+  - Constructor-based initialization with optional params for mocking
+  - Hierarchical conftest.py files
+  - Numpy-style docstrings with examples
+  - Testing structure mirroring src/
 
 Use MY actual package name and components in all examples.
+
+## Generate Commands
+
+**ALWAYS generate this command** (it's essential for maintaining test standards):
+
+**`.cursor/commands/create-or-refine-tests.md`** - Create, extend, or refine tests following project standards.
+
+**To generate:**
+1. Read `user_commands/create-or-refine-tests-template.md` from this template repo
+2. Customize it for SDK Python:
+   - Replace `{{package}}` with actual package name from Q1
+   - Update examples to use actual components from Q2
+   - Emphasize: test components separately, mock external APIs (requests, httpx), test public API exports from `__init__.py`, test component interactions, test exception hierarchy
+   - Reference the project's 200-testing skill
+3. Generate as `.cursor/commands/create-or-refine-tests.md` in the user's project
+4. Ensure it follows: structure mirrors src/, hierarchical conftest.py, initialization strategy for mocking, 80% coverage minimum
+
+**OPTIONAL command** (only if user wants CI/CD):
+
+**`.cursor/commands/create-github-workflow.md`** - Create GitHub Actions workflows.
+
+**To generate (if user wants it):**
+- If user mentioned CI/CD or versioning via GitHub workflows in Q7, ask: "Would you like a command to create GitHub Actions workflows?"
+- If yes, read `user_commands/create-github-workflow-template.md` from this template repo
+- Customize for SDK Python:
+  - Update with actual package name and structure
+  - Include common steps: pytest, ruff, mypy, build, publish to PyPI (if applicable)
+- Generate as `.cursor/commands/create-github-workflow.md` in the user's project
 
 Start with question #1.

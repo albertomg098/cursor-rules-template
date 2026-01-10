@@ -4,9 +4,11 @@ Understand the structure, skills, and patterns for a specific project type in th
 
 ## Interview
 
-Ask me ONE question:
+**CRITICAL:** Follow interview standards - ONE question at a time, show progress (X/TOTAL), use emojis, wait for answer before proceeding.
 
-**Which project type do you want to explore?**
+Ask ONE question:
+
+**Question 1/1:** 📚 Which project type do you want to explore?
 - `hexagonal-python` - Python backend with hexagonal architecture
 - `sdk-python` - Python SDK/Library package
 - `streamlit` - Streamlit MVP application
@@ -56,4 +58,4 @@ Based on my answer, you must:
 
 3. **Format the explanation clearly** with sections, code blocks, and examples.
 
-Start by asking: **"Which project type do you want to explore?"** (with the options listed above)
+Start by asking: **"Question 1/1: 📚 Which project type do you want to explore?"** (with the options listed above)

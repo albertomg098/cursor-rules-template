@@ -4,17 +4,19 @@ Quick-start for production React applications.
 
 ## Interview
 
+**CRITICAL:** Follow interview standards - ONE question at a time, show progress (X/TOTAL), use emojis, wait for answer before proceeding.
+
 Ask ONE at a time:
 
-1. **Project name?** (e.g., "admin-dashboard")
+1. **Question 1/5:** 📦 Project name? (e.g., "admin-dashboard")
 
-2. **Framework?** (Vite, Next.js, Create React App)
+2. **Question 2/5:** 🛠️ Framework? (Vite, Next.js, Create React App)
 
-3. **State management?** (Zustand, Redux, Context API)
+3. **Question 3/5:** ⚙️ State management? (Zustand, Redux, Context API)
 
-4. **API layer?** (React Query, SWR, custom)
+4. **Question 4/5:** 📦 API layer? (React Query, SWR, custom)
 
-5. **Styling?** (Tailwind CSS, CSS Modules, styled-components)
+5. **Question 5/5:** 🎨 Styling? (Tailwind CSS, CSS Modules, styled-components)
 
 ## Generate Structure
 

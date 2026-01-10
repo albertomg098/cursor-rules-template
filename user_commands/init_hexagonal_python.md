@@ -8,30 +8,30 @@ Ask ONE question at a time. If answers are unclear, ask follow-up questions.
 
 ### Project Basics
 
-1. **Project name?** 
+1. **Question 1/15:** 📦 Project name? 
    - If unclear, ask: "What's the service name or repository name? (e.g., 'payment-service', 'user-auth-api')"
 
-2. **Project purpose?**
+2. **Question 2/15:** 🎯 Project purpose?
    - Ask: "What does this service do? What's its main responsibility?"
    - If vague, ask: "What problem does it solve? Who uses it?"
 
-3. **Main domain entities?**
+3. **Question 3/15:** 🏗️ Main domain entities?
    - Ask: "What are the core business entities? (e.g., Payment, Transaction, Refund, User, Order)"
    - If unclear, ask: "What are the main things this system manages? List 3-5 core entities."
    - Follow-up: "Can you describe what each entity represents?"
 
 ### External Services - Be Specific
 
-4. **Database?**
+4. **Question 4/15:** 🛠️ Database?
    - Ask: "What database? (PostgreSQL, MySQL, MongoDB, Supabase, SQLite)"
    - Follow-up: "Are you using an ORM? (SQLAlchemy, Tortoise, Prisma, raw SQL)"
    - Ask: "How do you handle migrations? (Alembic, Django migrations, manual)"
 
-5. **Authentication?**
+5. **Question 5/15:** 🛠️ Authentication?
    - Ask: "How do you handle authentication? (Clerk, Auth0, custom JWT, OAuth, none)"
    - If custom, ask: "What authentication flow? (JWT tokens, session-based, API keys)"
 
-6. **Other external services?**
+6. **Question 6/15:** 📦 Other external services?
    - Ask: "What other external services do you integrate with?"
    - Break down:
      - **Storage:** "File storage? (S3, Cloud Storage, local filesystem, none)"
@@ -39,7 +39,7 @@ Ask ONE question at a time. If answers are unclear, ask follow-up questions.
      - **Message queues:** "Message queues? (RabbitMQ, Kafka, SQS, Redis pub/sub, none)"
      - **Cache:** "Caching? (Redis, Memcached, in-memory, none)"
 
-7. **Has Airflow/Orchestration?**
+7. **Question 7/15:** 🚀 Has Airflow/Orchestration?
    - Ask: "Do you use Airflow or other orchestration for scheduled tasks or workflows? (yes/no)"
    - If yes, ask: "Which orchestration framework? (Airflow, Prefect, etc.)"
    - Ask: "What do your workflows do? (data processing, ETL, scheduled jobs)"
@@ -48,47 +48,47 @@ Ask ONE question at a time. If answers are unclear, ask follow-up questions.
 
 ### Development Practices
 
-8. **Testing?**
+8. **Question 8/15:** 🧪 Testing?
    - Ask: "What testing framework? (pytest, unittest, none)"
    - Follow-up: "What's your test coverage target? (80%, 90%, not specified)"
    - Ask: "Do you use test fixtures? Mocking libraries? (pytest fixtures, unittest.mock)"
    - Note: Test structure mirrors src/ with e2e/, integration/, unit/ folders. Mocks live in conftest. Use fixtures and initialization pattern.
 
-9. **Code quality?**
+9. **Question 9/15:** ✅ Code quality?
    - Ask: "Do you use linters/formatters? (Black, Ruff, mypy, pylint)"
    - Follow-up: "Any pre-commit hooks?"
    - Note: Type hints always required, numpy-style and English docstrings
 
-10. **CI/CD?**
+10. **Question 10/15:** ⚙️ CI/CD?
     - Ask: "Do you have CI/CD? (GitHub Actions, GitLab CI, Jenkins, none)"
     - If yes, ask: "What does your pipeline do? (run tests, lint, deploy)"
 
 ### Architectural Patterns (Confirm/Clarify)
 
-12. **Use case structure?**
+11. **Question 11/15:** 🎨 Use case structure?
     - Confirm: "You'll use `use_cases/` OR `pipelines/` (not both), correct?"
     - Ask: "Should I create a `BaseUseCase` abstract class with common functionality (logging, error handling, validation, DI)?"
     - Follow-up: "What should BaseUseCase include? (abstract methods, common initialization, etc.)"
 
-13. **FastAPI structure?**
+12. **Question 12/15:** 🎨 FastAPI structure?
     - Confirm: "FastAPI should be encapsulated in a class in `main.py`, with `self.app = FastAPI(...)` in `__init__`, correct?"
     - Ask: "How should routes be organized? (by domain/entity, by feature, flat structure?)"
     - Confirm: "Manual dependency injection - initialize stateless components in FastAPI class `__init__`, correct?"
     - Ask: "Where should response schemas live? (`infrastructure/inbound_adapters/api/schemas/`)"
 
-14. **CLI structure?**
+13. **Question 13/15:** 🎨 CLI structure?
     - Confirm: "CLI should use Typer, encapsulated in a class, correct?"
     - Ask: "Should there be a router script that routes to use_cases, or should CLI commands directly call use cases?"
     - Confirm: "Manual dependency injection similar to FastAPI, correct?"
 
-15. **Error handling and logging?**
+14. **Question 14/15:** ✅ Error handling and logging?
     - Ask: "How should domain exceptions be mapped to HTTP responses? (global exception handlers?)"
     - Ask: "Should logging be centralized in a class or file? Where?"
     - Confirm: "All exceptions registered in domain layer, correct?"
 
 ### Commands to Generate
 
-16. **What commands would be useful?**
+15. **Question 15/15:** 🚀 What commands would be useful?
     - Ask: "What repetitive tasks do you do? (e.g., 'create use case', 'add new entity', 'generate migration', 'run tests')"
     - Ask: "What commands would speed up your workflow?"
     - Suggest: "Common commands might be: '/create-use-case', '/add-entity', '/create-adapter', '/generate-migration'"
@@ -172,7 +172,7 @@ Create skills in `.cursor/skills/<name>/SKILL.md` format. Skills should be conte
 
 ## Generate Commands
 
-Based on Q11, create commands in `.cursor/commands/<name>.md` format.
+Based on Q15, create commands in `.cursor/commands/<name>.md` format.
 
 ### Common Commands for Hexagonal Python:
 
@@ -197,6 +197,23 @@ If user wants them, generate:
 5. **`.cursor/commands/create-api-route.md`**
    - Ask: Route path, HTTP method, use case, request/response schemas
    - Generate: FastAPI route, Pydantic schemas, error handling
+
+6. **`.cursor/commands/create-or-refine-tests.md`** (ALWAYS GENERATE - Essential command)
+   - Read `user_commands/create-or-refine-tests-template.md` from this template repo
+   - Customize for Hexagonal Python:
+     - Replace placeholders with actual project name and entities from interview
+     - Emphasize: test use cases in isolation (mock ports/ABC interfaces), test domain entities (immutable, business logic), test adapters separately (mock external services), test error handling and custom exceptions, test FastAPI routes (mock use cases), test CLI commands (mock use cases)
+     - Reference the project's 200-testing skill
+   - Generate as `.cursor/commands/create-or-refine-tests.md` in the user's project
+   - Ensure it follows: structure mirrors src/, hierarchical conftest.py, initialization strategy for mocking, 80% coverage minimum
+
+7. **`.cursor/commands/create-github-workflow.md`** (OPTIONAL - Only if user wants CI/CD workflows)
+   - If user answered "yes" to CI/CD in Q10, ask: "Would you like a command to create GitHub Actions workflows?"
+   - If yes, read `user_commands/create-github-workflow-template.md` from this template repo
+   - Customize for Hexagonal Python:
+     - Update examples with actual project structure
+     - Include common steps: pytest, ruff, mypy, docker build (if applicable)
+   - Generate as `.cursor/commands/create-github-workflow.md` in the user's project
 
 ## Skill Content Requirements
 

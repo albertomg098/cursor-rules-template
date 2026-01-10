@@ -19,12 +19,39 @@ Every command file should have:
 4. **Generation instructions** specifying what to create
 5. **Content requirements** for generated files
 
-## Interview Pattern
+## Interview Pattern (MANDATORY)
 
-- Ask **ONE question at a time**
-- **Wait for answer** before proceeding
+**CRITICAL Requirements:**
+
+1. **ONE question at a time** - NEVER ask multiple questions in a single message
+2. **Wait for answer** - Always wait for the user's response before asking the next question
+3. **Show progress** - Always indicate question number and total: **(X/TOTAL)** format
+   - Example: "**Question 3/12:** 🛠️ What's the tech stack?"
+4. **Use emojis** - Make questions more engaging and visually appealing:
+   - 🏗️ for architecture/structure questions
+   - 🛠️ for tech stack/tools questions
+   - 📦 for dependencies/packages questions
+   - 🎨 for patterns/conventions questions
+   - ✅ for confirmation/validation questions
+   - 🔍 for exploration/analysis questions
+   - 📝 for documentation/questions about content
+   - 🚀 for workflow/process questions
+   - ⚙️ for configuration/settings questions
+   - 🧪 for testing questions
+   - 📚 for learning/understanding questions
+   - 💡 for suggestions/recommendations
+   - 🎯 for goals/objectives questions
+
+**Example format:**
+```
+**Question 3/12:** 🛠️ What's the tech stack? (language, framework, database, etc.)
+```
+
+**Additional Guidelines:**
 - Questions should be **clear and specific**
 - Provide **options** when applicable (e.g., "hexagonal-python, sdk-python, ...")
+- Use **friendly, conversational tone** with emojis
+- Show **progress tracking** in every question
 
 ## Generation Instructions
 

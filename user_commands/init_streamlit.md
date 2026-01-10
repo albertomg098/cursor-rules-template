@@ -4,13 +4,15 @@ Quick-start for Streamlit MVP applications.
 
 ## Interview
 
+**CRITICAL:** Follow interview standards - ONE question at a time, show progress (X/TOTAL), use emojis, wait for answer before proceeding.
+
 Ask ONE at a time:
 
-1. **Project name?** (e.g., "dashboard-app")
+1. **Question 1/3:** 🎯 Project name? (e.g., "dashboard-app")
 
-2. **Main pages/sections?** (e.g., "dashboard, settings, reports")
+2. **Question 2/3:** 🏗️ Main pages/sections? (e.g., "dashboard, settings, reports")
 
-3. **Data sources?** (API, database, files, etc.)
+3. **Question 3/3:** 📦 Data sources? (API, database, files, etc.)
 
 ## Generate Structure
 

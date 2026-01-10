@@ -6,29 +6,31 @@ This will generate a new file in `user_commands/` and automatically update the i
 
 ## Interview
 
+**CRITICAL:** Follow interview standards - ONE question at a time, show progress (X/TOTAL), use emojis, wait for answer before proceeding.
+
 Ask ONE at a time:
 
-1. **What project type are you adding?** (e.g., "Next.js", "Vue 3", "Django REST", "JavaScript", "Go microservice")
+1. **Question 1/9:** 🎯 What project type are you adding? (e.g., "Next.js", "Vue 3", "Django REST", "JavaScript", "Go microservice")
 
-2. **What's the typical project structure?** (describe folder layout - e.g., `app/`, `components/`, `lib/`, etc.)
+2. **Question 2/9:** 🏗️ What's the typical project structure? (describe folder layout - e.g., `app/`, `components/`, `lib/`, etc.)
 
-3. **What are the key architectural layers/components?** (e.g., "pages, components, api routes, middleware, database models")
+3. **Question 3/9:** 🏗️ What are the key architectural layers/components? (e.g., "pages, components, api routes, middleware, database models")
 
-4. **What's the tech stack?** (list: framework version, language, state management, database, testing framework, styling, etc.)
+4. **Question 4/9:** 🛠️ What's the tech stack? (list: framework version, language, state management, database, testing framework, styling, etc.)
 
-5. **What are the main patterns/conventions?** (e.g., "server components vs client components", "file-based routing", "API routes in app/api")
+5. **Question 5/9:** 🎨 What are the main patterns/conventions? (e.g., "server components vs client components", "file-based routing", "API routes in app/api")
 
-6. **What interview questions should the command ask?** (list 3-5 essential questions - e.g., "Project name?", "Has authentication?", "Database type?")
+6. **Question 6/9:** 📝 What interview questions should the command ask? (list 3-5 essential questions - e.g., "Project name?", "Has authentication?", "Database type?")
 
-7. **What skills should be generated?** (list skills with their purposes and globs):
+7. **Question 7/9:** 🎯 What skills should be generated? (list skills with their purposes and globs):
    - Always-on skills (project core, language standards) - format: `.cursor/skills/<name>/SKILL.md`
    - Auto-attach skills (layer-specific with globs)
    - Testing skills
    - Manual workflow skills
 
-8. **What should the command filename be?** (e.g., `init_nextjs.md`, `init_vue.md`, `init_javascript.md`)
+8. **Question 8/9:** 📝 What should the command filename be? (e.g., `init_nextjs.md`, `init_vue.md`, `init_javascript.md`)
 
-9. **What option name should appear in the router?** (e.g., "nextjs", "vue", "javascript" - used in `setup-project.md` routing)
+9. **Question 9/9:** ⚙️ What option name should appear in the router? (e.g., "nextjs", "vue", "javascript" - used in `setup-project.md` routing)
 
 ## Generate Command File
 
