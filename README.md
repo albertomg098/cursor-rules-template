@@ -30,50 +30,43 @@ Instead of manually writing Cursor rules for each project, this toolkit uses an 
 
 **No cloning needed!** Just copy/paste directly from GitHub. This is a one-time setup that works for all your projects.
 
-1. **Set global rules** (applies to ALL projects)
-   - **General rules:** Open `user_rules/global_rules.md` on GitHub
-     - Copy entire contents (click "Raw" button for clean copy)
-     - Paste into **Cursor Settings → Rules** (`Ctrl+,` → search "Rules")
-   - **Python-specific rules:** Open `user_rules/python_rules.md` on GitHub
-     - Copy entire contents and append to the same Rules field in Cursor Settings
-   - **React-specific rules:** (when available) Open `user_rules/react_rules.md` and append
-   - Save
-   
-   **Note:** You can combine multiple rule files by copying them all into the same Rules field, or keep them separate if you prefer. The general `global_rules.md` should always be included.
+#### Step 1: Set Global Rules
 
-2. **Create global commands** ⚠️ **REQUIRED for router to work**
-   
-   The files in `user_commands/` are markdown prompts that **MUST be set up as User Commands** in Cursor Settings. This is required because:
-   - ✅ You can easily access `setup-project` in any project via `/setup-project`
-   - ✅ The router can access the other `init-*.md` files when routing
-   - ❌ **Without this, the router will fail** when trying to route to specific project types
-   
-   **Steps:**
-   - Open **Cursor Settings → User Commands** (or `Ctrl+,` → search "User Commands")
-   - For each file below, open it on GitHub, copy entire contents, and create a User Command:
-     
-     **Main Command (Required):**
-     - ✅ **Command name:** `setup-project` (or `setup`)
-     - ✅ **Content:** Copy from `user_commands/setup-project.md` on GitHub
-     - ✅ **Description:** "Generate project-specific Cursor rules and commands"
-     
-     **Supporting Commands (Required for router):**
-     - ✅ **Command name:** `init-hexagonal-python`
-     - ✅ **Content:** Copy from `user_commands/init-hexagonal-python.md` on GitHub
+Copy these to **Cursor Settings → Rules** (`Ctrl+,` → search "Rules"):
 
+1. **General rules:** Open `user_rules/global_rules.md` on GitHub
+   - Click "Raw" button for clean copy
+   - Copy entire contents
+   - Paste into Cursor Settings → Rules
 
-     - ✅ **Command name:** `init-sdk-python`
-     - ✅ **Content:** Copy from `user_commands/init-sdk-python.md` on GitHub
+2. **Python-specific rules:** Open `user_rules/python_rules.md` on GitHub
+   - Copy entire contents
+   - Append to the same Rules field in Cursor Settings
 
+3. **React-specific rules:** (when available) Open `user_rules/react_rules.md` and append
 
-     - ✅ **Command name:** `init-streamlit`
-     - ✅ **Content:** Copy from `user_commands/init-streamlit.md` on GitHub
+**Note:** You can combine multiple rule files into one Rules field, or keep them separate. The `global_rules.md` should always be included.
 
+#### Step 2: Create Global Commands ⚠️ **REQUIRED**
 
-     - ✅ **Command name:** `init-react-frontend`
-     - ✅ **Content:** Copy from `user_commands/init-react-frontend.md` on GitHub
-   
-   **⚠️ Critical:** The `setup-project` command acts as a router and **requires** these commands to be set up as User Commands. Without them, routing will fail.
+The files in `user_commands/` are markdown prompts that **MUST be set up as User Commands** in Cursor Settings. This is required for the router to work properly.
+
+**Steps:**
+1. Open **Cursor Settings → User Commands** (`Ctrl+,` → search "User Commands")
+2. For each file below, open it on GitHub, copy entire contents, and create a User Command:
+
+   **Main Command (Required):**
+   - ✅ **Command name:** `setup-project` (or `setup`)
+   - ✅ **Content:** Copy from `user_commands/setup-project.md`
+   - ✅ **Description:** "Generate project-specific Cursor rules and commands"
+
+   **Supporting Commands (Required for router):**
+   - ✅ `init-hexagonal-python` → Copy from `user_commands/init-hexagonal-python.md`
+   - ✅ `init-sdk-python` → Copy from `user_commands/init-sdk-python.md`
+   - ✅ `init-streamlit` → Copy from `user_commands/init-streamlit.md`
+   - ✅ `init-react-frontend` → Copy from `user_commands/init-react-frontend.md`
+
+**⚠️ Critical:** The `setup-project` command acts as a router and **requires** these commands to be set up as User Commands. Without them, routing will fail.
 
 **That's it!** Once set up, you can use `/setup-project` in any project. The repo doesn't need to stay accessible - everything is copied to Cursor Settings.
 
@@ -94,8 +87,6 @@ For **any new or existing project**:
 3. Copy contents of `user_commands/setup-project.md` from GitHub
 4. Paste into chat and answer the interview questions
 5. Project-specific rules and commands are generated automatically ✨
-
-**That's it!** Your project now has tailored Cursor rules and commands.
 
 **Note:** If you haven't set up the global commands (Step 2), the router might not be able to access the `init-*.md` files. Make sure to complete the setup!
 
@@ -126,7 +117,7 @@ For **any new or existing project**:
 └─────────────────────────────────────────────────────────┘
 ```
 
-### What Gets Generated (In YOUR Project)
+### What Gets Generated
 
 **Skills (Rules)** - `.cursor/skills/<name>/SKILL.md` in YOUR project
 - Architecture patterns and guidelines specific to your project
@@ -175,6 +166,9 @@ cursor-rules-template/
 │   ├── init-react-frontend.md   # React quick-start
 │   ├── create-or-refine-tests-template.md # Template for test command (auto-generated for Python projects)
 │   └── create-github-workflow-template.md # Template for CI/CD workflows (optional)
+│
+├── reference/                   # Reference implementations for AI to use
+│   └── base_registry/           # BaseRegistry pattern implementation
 │
 └── .cursor/                     # Commands for THIS template repo (use `/` in this repo)
     ├── commands/                # Template repo commands (NOT project commands)
@@ -459,7 +453,7 @@ The files in `user_commands/` are markdown prompts that **must be set up as User
 
 **Markdown Prompt Files:**
 - Each file in `user_commands/` is a **self-contained prompt**
-- **Must be set up as User Commands** in Cursor Settings (see Quick Start Step 3)
+- **Must be set up as User Commands** in Cursor Settings (see Quick Start Step 2)
 - Can also be copy/pasted directly into Cursor chat (but router might not work)
 - Includes **complete instructions** for the AI to follow
 - **Interview-driven** - asks specific questions one at a time
@@ -508,8 +502,8 @@ This is a template repository designed to be customized for your needs. To exten
 2. Use `/modify-project-type` to adjust existing project types to match your standards
 3. Use `/add-framework-rules` to add framework/language-specific global rules (e.g., React, TypeScript, Go)
 4. Edit `user_rules/global_rules.md` or framework-specific rule files to update your coding standards
-4. Create custom commands in `user_commands/` for your workflows
-5. Share improvements back to the community if desired
+5. Create custom commands in `user_commands/` for your workflows
+6. Share improvements back to the community if desired
 
 ---
 
