@@ -161,6 +161,19 @@ Use MY actual project name, framework, and tech choices in all examples.
 
 ## Generate Commands
 
+**ALWAYS generate this command** (essential for new projects):
+
+**`.cursor/commands/build-project.md`** - Build complete project structure and initial files following project rules.
+
+**To generate:**
+1. Read `user_commands/build-project-template.md` from this template repo
+2. Customize it for React Frontend:
+   - Emphasize: create `src/` structure with components/, hooks/, services/, types/, create pages/ or app/ structure (depending on framework), create test structure mirroring src/, create configuration files (package.json, tsconfig.json, vite.config.ts or next.config.js, .eslintrc.json, etc.), create initial components and types, create API service layer, create state management setup (Zustand/Redux)
+   - Reference all project skills, especially structure from `000-project-core/SKILL.md`, TypeScript standards from `010-typescript/SKILL.md`, component patterns from `100-components/SKILL.md`, and testing patterns from `200-testing/SKILL.md`
+   - Use actual project name and structure in generated files
+3. Generate as `.cursor/commands/build-project.md` in the user's project
+4. This command uses the project's skills as context to build the complete project structure
+
 **ALWAYS generate this command** (essential for existing projects):
 
 **`.cursor/commands/review-and-refactor.md`** - Review and refactor codebase using project rules.

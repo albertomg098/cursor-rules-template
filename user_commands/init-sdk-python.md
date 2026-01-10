@@ -241,6 +241,19 @@ Use MY actual package name and components in all examples.
   - Include common steps: pytest, ruff, mypy, build, publish to PyPI (if applicable)
 - Generate as `.cursor/commands/create-github-workflow.md` in the user's project
 
+**ALWAYS generate this command** (essential for new projects):
+
+**`.cursor/commands/build-project.md`** - Build complete project structure and initial files following project rules.
+
+**To generate:**
+1. Read `user_commands/build-project-template.md` from this template repo
+2. Customize it for SDK Python:
+   - Emphasize: create `src/{{package}}/` structure with components, create `core/` with exceptions/models/config/base subfolders, create `extensions/` if applicable, create test structure mirroring src/, create `__init__.py` files with proper exports, create initial domain models, create configuration files (pyproject.toml, .pylintrc, etc.), create conftest.py files
+   - Reference all project skills, especially structure from `000-package-core/SKILL.md`, component patterns from component-specific skills, and testing patterns from `200-testing/SKILL.md`
+   - Use actual package name and components in generated files
+3. Generate as `.cursor/commands/build-project.md` in the user's project
+4. This command uses the project's skills as context to build the complete project structure
+
 **ALWAYS generate this command** (essential for existing projects):
 
 **`.cursor/commands/review-and-refactor.md`** - Review and refactor codebase using project rules.
