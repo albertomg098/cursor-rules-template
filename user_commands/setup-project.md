@@ -126,33 +126,102 @@ If I answered `custom`, conduct a thorough interview. Ask ONE question at a time
     - Follow-up: "List 3-5 commands that would be most helpful"
     - For each command, ask: "What should `/command-name` do? What questions should it ask?"
 
+## Step 3: Check for Existing Files
+
+**CRITICAL:** Before generating any files, you MUST check for existing skills and commands.
+
+1. **Check for existing skills:**
+   - List all existing files in `.cursor/skills/` directory (if it exists)
+   - For each skill that would be generated, check if it already exists
+   - Show user: "I found these existing skills: [list]"
+
+2. **Check for existing commands:**
+   - List all existing files in `.cursor/commands/` directory (if it exists)
+   - For each command that would be generated, check if it already exists
+   - Show user: "I found these existing commands: [list]"
+
+3. **Ask how to handle existing files:**
+   - If any existing files are found, ask ONE question:
+   
+   **"How should I handle existing files?"**
+   - `overwrite` - Replace all existing files with new ones
+   - `refine` - Update existing files with new information, preserve custom content
+   - `skip` - Keep existing files as-is, only create new ones
+   - `selective` - Let me choose for each file individually
+   
+   Wait for answer before proceeding.
+
+4. **If user chose `refine`:**
+   - For each existing file:
+     - Read the existing file content completely
+     - Identify what's custom vs. what's template-generated:
+       - Custom content: Examples using actual project names/entities, project-specific patterns, custom rules added by user
+       - Template content: Generic examples, standard patterns, boilerplate that should be updated
+     - Merge strategy:
+       - **Frontmatter:** Update if missing or incorrect, preserve if custom
+       - **Project-specific examples:** Always preserve user's actual project details (names, entities, services)
+       - **Patterns/rules:** Update with latest best practices, but preserve any custom rules user added
+       - **Structure:** Preserve custom sections, add missing standard sections
+     - If content conflicts (e.g., different patterns), ask: "I see [conflict]. Should I [option1] or [option2]?"
+     - Show diff before writing: "I'll update [filename] with these changes: [summary]"
+   - For new files: Generate normally
+
+5. **If user chose `selective`:**
+   - For each existing file, ask: "Refine [filename]? (yes/no/skip)"
+   - Wait for answer before proceeding to next file
+   - Apply chosen action (refine/overwrite/skip) per file
+
 ## Generate Skills and Commands
 
-After collecting all answers, generate:
+After handling existing files (or if none exist), generate:
 
 ### Skills (Rules)
 
-**CRITICAL:** Each skill file MUST start with frontmatter in this exact format:
+**CRITICAL:** Each skill file MUST start with frontmatter. Use the appropriate format based on skill type:
 
+**Always-on skill:**
 ```yaml
 ---
 name: "skill-name"
 description: "Description of what this skill enforces"
-globs: ["pattern/**"]  # Only for auto-attach skills (omit for always-on or manual)
-alwaysApply: true      # Only for always-on skills (omit if using globs)
+alwaysApply: true
+---
+```
+
+**Auto-attach skill:**
+```yaml
+---
+name: "skill-name"
+description: "Description of what this skill enforces"
+globs: ["pattern/**"]
+---
+```
+
+**Manual skill:**
+```yaml
+---
+name: "skill-name"
+description: "Description of what this skill enforces"
 ---
 ```
 
 **Important:** 
 - `name` is REQUIRED - use the skill folder name
 - `description` is REQUIRED - brief description of what the skill enforces
-- `globs` is OPTIONAL - only include if auto-attaching to file patterns
-- `alwaysApply` is OPTIONAL - only include if this is an always-on skill (true). If using `globs`, omit `alwaysApply`. For manual skills, omit both.
+- `globs` is OPTIONAL - only include if auto-attaching to file patterns (mutually exclusive with `alwaysApply`)
+- `alwaysApply` is OPTIONAL - only include if this is an always-on skill (true). Mutually exclusive with `globs`. For manual skills, omit both `globs` and `alwaysApply`.
 
 Generate these skills:
 
 - `.cursor/skills/000-project-core/SKILL.md` (always-on) - Project overview, architecture, domain
   - Frontmatter: `name: "000-project-core"`, `description: "Project overview, architecture, domain"`, `alwaysApply: true`
+  - **CRITICAL:** Must include a "Project Context" section at the top with:
+    - Project name (from Q1)
+    - Project purpose/description (what it does, problem it solves, who uses it)
+    - Domain/entities (from Q13)
+    - Tech stack summary (from Q5-Q9)
+    - Architecture pattern (from Q3)
+  - This context helps the AI understand what the project is about and make appropriate suggestions
 - `.cursor/skills/010-language-standards/SKILL.md` (always-on) - Language conventions, formatting
   - Frontmatter: `name: "010-language-standards"`, `description: "Language conventions, formatting"`, `alwaysApply: true`
 - Layer-specific skills with appropriate globs based on structure
@@ -165,6 +234,23 @@ Generate these skills:
   - Frontmatter: `name: "901-update-docs"`, `description: "Documentation checklist"` (no globs, no alwaysApply)
 
 ### Commands
+
+**ALWAYS generate this command** (essential for existing projects):
+
+**`.cursor/commands/review-and-refactor.md`** - Review and refactor codebase using project rules.
+
+**To generate:**
+1. Read `user_commands/review-and-refactor-template.md` from this template repo
+2. Customize it based on project type:
+   - Use project-specific patterns from the generated skills
+   - Reference architecture patterns from `000-project-core/SKILL.md`
+   - Reference language standards from language-specific skills
+   - Reference layer-specific patterns from auto-attach skills
+   - Reference testing patterns from `200-testing/SKILL.md`
+3. Generate as `.cursor/commands/review-and-refactor.md` in the user's project
+4. This command uses the project's skills as context to review and refactor existing code
+
+**Additional commands** (based on Q16):
 
 For each command identified in Q16, create:
 - `.cursor/commands/{{command-name}}.md` - With interview questions and generation logic

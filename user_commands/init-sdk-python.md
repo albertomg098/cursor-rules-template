@@ -30,6 +30,51 @@ Ask ONE at a time:
 
 8. **Question 8/8:** 📚 Documentation approach? (Confirm: numpy-style docstrings with examples in docstrings, or specify other)
 
+## Check for Existing Files
+
+**CRITICAL:** Before generating any files, you MUST check for existing skills and commands.
+
+1. **Check for existing skills:**
+   - List all existing files in `.cursor/skills/` directory (if it exists)
+   - For each skill that would be generated, check if it already exists
+   - Show user: "I found these existing skills: [list]"
+
+2. **Check for existing commands:**
+   - List all existing files in `.cursor/commands/` directory (if it exists)
+   - For each command that would be generated, check if it already exists
+   - Show user: "I found these existing commands: [list]"
+
+3. **Ask how to handle existing files:**
+   - If any existing files are found, ask ONE question:
+   
+   **"How should I handle existing files?"**
+   - `overwrite` - Replace all existing files with new ones
+   - `refine` - Update existing files with new information, preserve custom content
+   - `skip` - Keep existing files as-is, only create new ones
+   - `selective` - Let me choose for each file individually
+   
+   Wait for answer before proceeding.
+
+4. **If user chose `refine`:**
+   - For each existing file:
+     - Read the existing file content completely
+     - Identify what's custom vs. what's template-generated:
+       - Custom content: Examples using actual project names/entities, project-specific patterns, custom rules added by user
+       - Template content: Generic examples, standard patterns, boilerplate that should be updated
+     - Merge strategy:
+       - **Frontmatter:** Update if missing or incorrect, preserve if custom
+       - **Project-specific examples:** Always preserve user's actual project details (names, entities, services)
+       - **Patterns/rules:** Update with latest best practices, but preserve any custom rules user added
+       - **Structure:** Preserve custom sections, add missing standard sections
+     - If content conflicts (e.g., different patterns), ask: "I see [conflict]. Should I [option1] or [option2]?"
+     - Show diff before writing: "I'll update [filename] with these changes: [summary]"
+   - For new files: Generate normally
+
+5. **If user chose `selective`:**
+   - For each existing file, ask: "Refine [filename]? (yes/no/skip)"
+   - Wait for answer before proceeding to next file
+   - Apply chosen action (refine/overwrite/skip) per file
+
 ## Generate Structure
 
 ```
@@ -61,22 +106,39 @@ src/
 
 ## Generate Skills
 
-Create skills in `.cursor/skills/<name>/SKILL.md` format. **CRITICAL:** Each skill file MUST start with frontmatter in this exact format:
+Create skills in `.cursor/skills/<name>/SKILL.md` format. **CRITICAL:** Each skill file MUST start with frontmatter. Use the appropriate format based on skill type:
 
+**Always-on skill:**
 ```yaml
 ---
 name: "skill-name"
 description: "Description of what this skill enforces"
-globs: ["pattern/**"]  # Only for auto-attach skills (omit for always-on or manual)
-alwaysApply: true      # Only for always-on skills (omit if using globs)
+alwaysApply: true
+---
+```
+
+**Auto-attach skill:**
+```yaml
+---
+name: "skill-name"
+description: "Description of what this skill enforces"
+globs: ["pattern/**"]
+---
+```
+
+**Manual skill:**
+```yaml
+---
+name: "skill-name"
+description: "Description of what this skill enforces"
 ---
 ```
 
 **Important:** 
 - `name` is REQUIRED - use the skill folder name
 - `description` is REQUIRED - brief description of what the skill enforces
-- `globs` is OPTIONAL - only include if auto-attaching to file patterns
-- `alwaysApply` is OPTIONAL - only include if this is an always-on skill (true). If using `globs`, omit `alwaysApply`. For manual skills, omit both.
+- `globs` is OPTIONAL - only include if auto-attaching to file patterns (mutually exclusive with `alwaysApply`)
+- `alwaysApply` is OPTIONAL - only include if this is an always-on skill (true). Mutually exclusive with `globs`. For manual skills, omit both `globs` and `alwaysApply`.
 
 Skills should be context-dependent: decide whether to apply always, auto-attach based on file patterns, or make manual.
 
@@ -123,7 +185,18 @@ Skills should be context-dependent: decide whether to apply always, auto-attach 
 
 ## Skill Content Requirements
 
-Each skill MUST:
+### 000-package-core Skill MUST Include:
+
+**CRITICAL - Project Context Section:**
+- **Package Name:** {{package_name from Q1}}
+- **Package Purpose:** {{from Q2-Q3}} - What this SDK/library does, main components, extensions/plugins
+- **Components:** {{components from Q2}} - Main components and their purposes
+- **Tech Stack:** {{from Q4}} - External dependencies and libraries
+- **Architecture:** SDK/Library structure with public API, components, core, and extensions
+
+This context helps the AI understand what the package is about and make appropriate suggestions.
+
+### All Skills MUST:
 - Use MY actual package name and components in examples
 - Include real code examples (not pseudo-code)
 - Show DO/DON'T patterns
@@ -167,5 +240,17 @@ Use MY actual package name and components in all examples.
   - Update with actual package name and structure
   - Include common steps: pytest, ruff, mypy, build, publish to PyPI (if applicable)
 - Generate as `.cursor/commands/create-github-workflow.md` in the user's project
+
+**ALWAYS generate this command** (essential for existing projects):
+
+**`.cursor/commands/review-and-refactor.md`** - Review and refactor codebase using project rules.
+
+**To generate:**
+1. Read `user_commands/review-and-refactor-template.md` from this template repo
+2. Customize it for SDK Python:
+   - Emphasize: review public API exports (only from `__init__.py`), check component structure (folders with `__init__.py`), verify ABC interfaces (not Protocol), check core organization (exceptions/models/config/base), ensure manual DI via constructors, verify test structure mirrors src/, check documentation standards
+   - Reference all project skills, especially SDK design principles from `000-package-core/SKILL.md`, component patterns from component-specific skills, and testing patterns from `200-testing/SKILL.md`
+3. Generate as `.cursor/commands/review-and-refactor.md` in the user's project
+4. This command uses the project's skills as context to review and refactor existing code
 
 Start with question #1.

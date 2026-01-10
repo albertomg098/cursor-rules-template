@@ -215,20 +215,20 @@ src/
 ```
 
 **Rules to Generate:**
-- `000-project-core.mdc` (Always) - Architecture overview, dependency direction
-- `010-python-standards.mdc` (Always) - Python conventions
-- `100-domain-layer.mdc` (Auto: src/domain/**) - Pure business logic
-- `110-application-layer.mdc` (Auto: src/application/**) - Use case patterns
-- `120-infrastructure.mdc` (Auto: src/infrastructure/**) - Adapter patterns
-- `121-fastapi.mdc` (Auto: src/infrastructure/inbound_adapters/api/**) - Route patterns
-- `122-airflow.mdc` (Auto: src/infrastructure/inbound_adapters/cli/**) - DAG patterns (if Airflow)
-- `123-adapters.mdc` (Auto: src/infrastructure/outbound_adapters/**) - External service adapters
-- `130-interfaces.mdc` (Auto: src/interfaces/**) - Pydantic schemas
-- `200-testing.mdc` (Auto: tests/**) - Testing patterns
-- `300-terraform.mdc` (Auto: terraform/**) - IaC patterns (if terraform)
-- `400-config.mdc` (Auto: config/**/*.yaml) - YAML structure
-- `900-new-feature.mdc` (Manual) - Feature workflow
-- `901-update-docs.mdc` (Manual) - Documentation checklist
+- `000-project-core.md` (Always) - Architecture overview, dependency direction
+- `010-python-standards.md` (Always) - Python conventions
+- `100-domain-layer.md` (Auto: src/domain/**) - Pure business logic
+- `110-application-layer.md` (Auto: src/application/**) - Use case patterns
+- `120-infrastructure.md` (Auto: src/infrastructure/**) - Adapter patterns
+- `121-fastapi.md` (Auto: src/infrastructure/inbound_adapters/api/**) - Route patterns
+- `122-cli.md` (Auto: src/infrastructure/inbound_adapters/cli/**) - CLI patterns (Typer)
+- `123-adapters.md` (Auto: src/infrastructure/outbound_adapters/**) - External service adapters
+- `130-interfaces.md` (Auto: src/interfaces/**) - Pydantic schemas
+- `200-testing.md` (Auto: tests/**) - Testing patterns
+- `300-terraform.md` (Auto: terraform/**) - IaC patterns (if terraform)
+- `400-config.md` (Auto: config/**/*.yaml) - YAML structure
+- `900-new-feature.md` (Manual) - Feature workflow
+- `901-update-docs.md` (Manual) - Documentation checklist
 
 **Rule Content Requirements:**
 - Correct frontmatter (description, globs, alwaysApply)
@@ -264,17 +264,17 @@ src/
 - Docstrings with examples
 
 **Rules to Generate:**
-- `000-package-core.mdc` (Always) - SDK design principles
-- `010-python-standards.mdc` (Always) - Python conventions
-- `100-public-api.mdc` (Auto: src/{{package}}/__init__.py, client.py)
-- `110-core.mdc` (Auto: src/{{package}}/core/**)
-- `120-components.mdc` (Auto: src/{{package}}/components/**)
-- `130-models.mdc` (Auto: src/{{package}}/models/**)
-- `140-exceptions.mdc` (Auto: src/{{package}}/exceptions.py)
-- `200-testing.mdc` (Auto: tests/**)
-- `300-documentation.mdc` (Auto: docs/**, README.md)
-- `900-api-changes.mdc` (Manual) - Breaking change workflow
-- `901-release.mdc` (Manual) - Publishing workflow
+- `000-package-core.md` (Always) - SDK design principles
+- `010-python-standards.md` (Always) - Python conventions
+- `100-public-api.md` (Auto: src/{{package}}/__init__.py, client.py)
+- `110-core.md` (Auto: src/{{package}}/core/**)
+- `120-components.md` (Auto: src/{{package}}/components/**)
+- `130-models.md` (Auto: src/{{package}}/models/**)
+- `140-exceptions.md` (Auto: src/{{package}}/exceptions.py)
+- `200-testing.md` (Auto: tests/**)
+- `300-documentation.md` (Auto: docs/**, README.md)
+- `900-api-changes.md` (Manual) - Breaking change workflow
+- `901-release.md` (Manual) - Publishing workflow
 
 ### 8. user_commands/init-streamlit.md
 
@@ -295,11 +295,11 @@ config/
 ```
 
 **Rules to Generate:**
-- `000-project-core.mdc` (Always) - Project overview
-- `100-pages.mdc` (Auto: src/pages/**) - Page structure
-- `110-components.mdc` (Auto: src/components/**) - Component patterns
-- `120-services.mdc` (Auto: src/services/**) - Business logic
-- `200-testing.mdc` (Auto: tests/**) - Testing patterns
+- `000-project-core.md` (Always) - Project overview
+- `100-pages.md` (Auto: src/pages/**) - Page structure
+- `110-components.md` (Auto: src/components/**) - Component patterns
+- `120-services.md` (Auto: src/services/**) - Business logic
+- `200-testing.md` (Auto: tests/**) - Testing patterns
 
 ### 9. user_commands/init-react-frontend.md
 
@@ -329,15 +329,15 @@ src/
 ```
 
 **Rules to Generate:**
-- `000-project-core.mdc` (Always) - Architecture
-- `010-typescript.mdc` (Always) - TS standards
-- `100-components.mdc` (Auto: src/components/**)
-- `110-pages.mdc` (Auto: src/pages/** or src/app/**)
-- `120-hooks.mdc` (Auto: src/hooks/**)
-- `130-state.mdc` (Auto: src/store/**)
-- `140-api.mdc` (Auto: src/api/**)
-- `200-testing.mdc` (Auto: **/*.test.tsx)
-- `300-styling.mdc` (Auto: *.css, tailwind)
+- `000-project-core.md` (Always) - Architecture
+- `010-typescript.md` (Always) - TS standards
+- `100-components.md` (Auto: src/components/**)
+- `110-pages.md` (Auto: src/pages/** or src/app/**)
+- `120-hooks.md` (Auto: src/hooks/**)
+- `130-state.md` (Auto: src/store/**)
+- `140-api.md` (Auto: src/api/**)
+- `200-testing.md` (Auto: **/*.test.tsx)
+- `300-styling.md` (Auto: *.css, tailwind)
 
 ### 10. user_commands/add_rule.md
 
@@ -347,7 +347,7 @@ src/
 1. Ask: What should this rule cover? (description)
 2. Ask: When should it activate? (always, auto-attach to glob, manual)
 3. Ask: Any specific patterns or examples?
-4. Generate single `.mdc` file with appropriate naming
+4. Generate single `.md` file with appropriate naming
 
 **Command Format:**
 - Simple interview script
@@ -358,7 +358,7 @@ src/
 
 ### Frontmatter Format
 
-Every `.mdc` rule file must have:
+Every `.md` rule file must have:
 
 ```markdown
 ---

@@ -27,6 +27,7 @@ These templates are used by init commands to generate project-specific commands:
 |----------|---------|----------------|
 | `create-or-refine-tests-template.md` | Template for generating test creation commands in Python projects. | Always generated for Python projects (SDK, Hexagonal) |
 | `create-github-workflow-template.md` | Template for generating GitHub Actions workflow creation commands. | Optional - only if user wants CI/CD workflows |
+| `review-and-refactor-template.md` | Template for generating code review and refactoring commands. Uses project's skills as context to review and refactor existing code. | Always generated for all project types (essential for existing projects) |
 
 ## Template Repo Commands (Use `/` in Cursor)
 

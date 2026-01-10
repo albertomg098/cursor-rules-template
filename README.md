@@ -269,7 +269,20 @@ Cursor has two distinct systems that work together:
 
 ### Setting Up an Existing Project
 
-Same process as new projects. Existing skills won't be overwritten unless you explicitly ask to regenerate.
+Same process as new projects. The setup command will:
+
+1. **Detect existing skills and commands** - Automatically checks what already exists
+2. **Ask how to handle them** - You can choose:
+   - `overwrite` - Replace all existing files with new ones
+   - `refine` - Update existing files with new information, preserve your custom content
+   - `skip` - Keep existing files as-is, only create new ones
+   - `selective` - Choose for each file individually
+
+When using `refine`, the command will:
+- Preserve your project-specific examples and custom rules
+- Update frontmatter and standard patterns
+- Merge new best practices while keeping your customizations
+- Ask for clarification if there are conflicts
 
 ### Adding a Single Skill to Your Project
 

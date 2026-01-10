@@ -45,15 +45,35 @@ Create `user_commands/{{filename}}.md` with:
 4. **Generate Structure section:** Show the folder structure from Q2
 
 5. **Generate Skills section:** List all skills from Q7 with:
-   - **CRITICAL:** Include explicit frontmatter format instructions:
+   - **CRITICAL:** Include explicit frontmatter format instructions with separate examples:
+     
+     **Always-on skill:**
      ```yaml
      ---
      name: "skill-name"
      description: "Description of what this skill enforces"
-     globs: ["pattern/**"]  # Only for auto-attach skills (omit for always-on or manual)
-     alwaysApply: true      # Only for always-on skills (omit if using globs)
+     alwaysApply: true
      ---
      ```
+     
+     **Auto-attach skill:**
+     ```yaml
+     ---
+     name: "skill-name"
+     description: "Description of what this skill enforces"
+     globs: ["pattern/**"]
+     ---
+     ```
+     
+     **Manual skill:**
+     ```yaml
+     ---
+     name: "skill-name"
+     description: "Description of what this skill enforces"
+     ---
+     ```
+     
+     Note: `globs` and `alwaysApply` are mutually exclusive. Choose one based on skill type.
    - Skill name (folder name)
    - Full path format: `.cursor/skills/<name>/SKILL.md`
    - Purpose
