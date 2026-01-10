@@ -171,6 +171,18 @@ If I answered `custom`, conduct a thorough interview. Ask ONE question at a time
    - Wait for answer before proceeding to next file
    - Apply chosen action (refine/overwrite/skip) per file
 
+## Step 3.5: Determine Repository Type
+
+**CRITICAL:** Before generating commands, determine if this is a new or existing repository.
+
+Ask me ONE question:
+
+**Is this a new repository or an existing one?**
+- `new` - New repository, no existing codebase (or minimal setup)
+- `existing` - Existing repository with code already present
+
+Wait for my answer, then proceed to command generation.
+
 ## Generate Skills and Commands
 
 After handling existing files (or if none exist), generate:
@@ -235,12 +247,15 @@ Generate these skills:
 
 ### Commands
 
-**ALWAYS generate this command** (essential for new projects):
+**Generate commands based on repository type:**
+
+#### For New Repositories (if user answered `new` in Step 3.5):
 
 **`.cursor/commands/build-project.md`** - Build complete project structure and initial files following project rules.
 
 **To generate:**
-1. Read `user_commands/build-project-template.md` from this template repo
+1. Access User Command `build-project-template` (or try reading from `user_commands/build-project-template.md` if available in workspace)
+   - **Note:** This command should be set up as a User Command in Cursor Settings. If it's not available, prompt the user to set it up or provide the template content.
 2. Customize it based on project type:
    - Use project-specific structure patterns from the generated skills
    - Reference architecture patterns from `000-project-core/SKILL.md`
@@ -251,12 +266,22 @@ Generate these skills:
 3. Generate as `.cursor/commands/build-project.md` in the user's project
 4. This command uses the project's skills as context to build the complete project structure
 
-**ALWAYS generate this command** (essential for existing projects):
+#### For Existing Repositories (if user answered `existing` in Step 3.5):
+
+**Do NOT generate `build-project.md`** unless the user specifically requests it.
+
+**If user wants build-project for existing repo:**
+- Ask: "Would you like me to generate the `/build-project` command? (yes/no)"
+- If yes, generate it using the same process as for new repositories above
+- If no, skip it
+
+#### Always Generate (for both new and existing repositories):
 
 **`.cursor/commands/review-and-refactor.md`** - Review and refactor codebase using project rules.
 
 **To generate:**
-1. Read `user_commands/review-and-refactor-template.md` from this template repo
+1. Access User Command `review-and-refactor-template` (or try reading from `user_commands/review-and-refactor-template.md` if available in workspace)
+   - **Note:** This command should be set up as a User Command in Cursor Settings. If it's not available, prompt the user to set it up or provide the template content.
 2. Customize it based on project type:
    - Use project-specific patterns from the generated skills
    - Reference architecture patterns from `000-project-core/SKILL.md`
