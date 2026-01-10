@@ -295,6 +295,19 @@ Use MY actual project name, pages, and configuration in examples.
 
 ## Generate Commands
 
+**ALWAYS generate this command** (essential for new projects):
+
+**`.cursor/commands/build-project.md`** - Build complete project structure and initial files following project rules.
+
+**To generate:**
+1. Read `user_commands/build-project-template.md` from this template repo
+2. Customize it for Streamlit:
+   - Emphasize: create `src/pages/` structure, create `src/components/` structure, create `src/services/` layer, create `src/models/` for Pydantic models, create `src/exceptions/` for custom exceptions, create test structure mirroring src/, create configuration files (pyproject.toml, .pylintrc, config/.streamlit/config.toml, etc.), create initial pages and components, create service layer structure
+   - Reference all project skills, especially structure from `000-project-core/SKILL.md`, page patterns from `100-pages/SKILL.md`, component patterns from `110-components/SKILL.md`, styling patterns from `300-styling/SKILL.md`, and testing patterns from `200-testing/SKILL.md`
+   - Use actual project name and pages/components in generated files
+3. Generate as `.cursor/commands/build-project.md` in the user's project
+4. This command uses the project's skills as context to build the complete project structure
+
 **ALWAYS generate this command** (essential for existing projects):
 
 **`.cursor/commands/review-and-refactor.md`** - Review and refactor codebase using project rules.

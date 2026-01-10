@@ -235,6 +235,22 @@ Generate these skills:
 
 ### Commands
 
+**ALWAYS generate this command** (essential for new projects):
+
+**`.cursor/commands/build-project.md`** - Build complete project structure and initial files following project rules.
+
+**To generate:**
+1. Read `user_commands/build-project-template.md` from this template repo
+2. Customize it based on project type:
+   - Use project-specific structure patterns from the generated skills
+   - Reference architecture patterns from `000-project-core/SKILL.md`
+   - Reference language standards from language-specific skills
+   - Reference layer-specific patterns from auto-attach skills
+   - Reference testing patterns from `200-testing/SKILL.md`
+   - Use actual project names, entities, and components in generated files
+3. Generate as `.cursor/commands/build-project.md` in the user's project
+4. This command uses the project's skills as context to build the complete project structure
+
 **ALWAYS generate this command** (essential for existing projects):
 
 **`.cursor/commands/review-and-refactor.md`** - Review and refactor codebase using project rules.

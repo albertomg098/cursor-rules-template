@@ -322,6 +322,16 @@ If user wants them, generate:
      - Include common steps: pytest, ruff, mypy, docker build (if applicable)
    - Generate as `.cursor/commands/create-github-workflow.md` in the user's project
 
+7. **`.cursor/commands/build-project.md`** (ALWAYS GENERATE - Essential for new projects)
+   - Read `user_commands/build-project-template.md` from this template repo
+   - Customize for Hexagonal Python:
+     - Emphasize: create `src/domain/` with entities, value_objects (including BaseRegistry), exceptions, create `src/application/` with use_cases, create `src/infrastructure/` with inbound_adapters (FastAPI/Typer) and outbound_adapters, create test structure mirroring src/, create BaseRegistry files from reference/base_registry/, create initial domain entities, create configuration files (pyproject.toml, .pylintrc, etc.), create conftest.py files
+     - Reference all project skills, especially structure from `000-project-core/SKILL.md`, domain patterns from `100-domain-layer/SKILL.md`, and testing patterns from `200-testing/SKILL.md`
+     - Use actual project name and entities in generated files
+     - **CRITICAL:** Automatically generate BaseRegistry by reading from `reference/base_registry/` and creating files with correct imports
+   - Generate as `.cursor/commands/build-project.md` in the user's project
+   - This command uses the project's skills as context to build the complete project structure
+
 8. **`.cursor/commands/review-and-refactor.md`** (ALWAYS GENERATE - Essential for existing projects)
    - Read `user_commands/review-and-refactor-template.md` from this template repo
    - Customize for Hexagonal Python:
