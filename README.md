@@ -54,16 +54,19 @@ Instead of manually writing Cursor rules for each project, this toolkit uses an 
      
      **Supporting Commands (Required for router):**
      - ✅ **Command name:** `init-hexagonal-python`
-        - ✅ **Content:** Copy from `user_commands/init_hexagonal_python.md` on GitHub
-     
+     - ✅ **Content:** Copy from `user_commands/init_hexagonal_python.md` on GitHub
+
+
      - ✅ **Command name:** `init-sdk-python`
-        - ✅ **Content:** Copy from `user_commands/init_sdk_python.md` on GitHub
-     
+     - ✅ **Content:** Copy from `user_commands/init_sdk_python.md` on GitHub
+
+
      - ✅ **Command name:** `init-streamlit`
-        - ✅ **Content:** Copy from `user_commands/init_streamlit.md` on GitHub
-     
+     - ✅ **Content:** Copy from `user_commands/init_streamlit.md` on GitHub
+
+
      - ✅ **Command name:** `init-react-frontend`
-        - ✅ **Content:** Copy from `user_commands/init_react_frontend.md` on GitHub
+     - ✅ **Content:** Copy from `user_commands/init_react_frontend.md` on GitHub
    
    **⚠️ Critical:** The `setup-project` command acts as a router and **requires** these commands to be set up as User Commands. Without them, routing will fail.
 
