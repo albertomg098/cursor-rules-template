@@ -19,6 +19,15 @@ These commands are called internally by `setup-project.md`. You don't need to us
 | `init_streamlit.md` | Streamlit MVP application |
 | `init_react_frontend.md` | React frontend application (Vite/Next.js) |
 
+## Command Templates
+
+These templates are used by init commands to generate project-specific commands:
+
+| Template | Purpose | When Generated |
+|----------|---------|----------------|
+| `create-or-refine-tests-template.md` | Template for generating test creation commands in Python projects. | Always generated for Python projects (SDK, Hexagonal) |
+| `create-github-workflow-template.md` | Template for generating GitHub Actions workflow creation commands. | Optional - only if user wants CI/CD workflows |
+
 ## Template Repo Commands (Use `/` in Cursor)
 
 These are **actual Cursor commands** accessible via `/` when working on the template repo:
@@ -26,6 +35,7 @@ These are **actual Cursor commands** accessible via `/` when working on the temp
 | Command | Description | Use When |
 |---------|-------------|----------|
 | `/add-project-type` | Create new quick-start command | Want to add support for new project type (e.g., Next.js, Vue, JavaScript, etc.) |
+| `/modify-project-type` | Adjust existing project type to match your standards | Want to customize an existing project type (e.g., modify `sdk-python` to match your architecture) |
 | `/explore-project-type` | Understand a project type's structure and rules | Want to learn about a project type's standards and patterns |
 | `/add-skill` | Add single skill to other projects | Need to add a skill to a project (not template repo) |
 
