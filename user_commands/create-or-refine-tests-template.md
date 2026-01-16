@@ -1,8 +1,48 @@
 # Create or Refine Tests
 
-Create, extend, or refine tests following project standards: structure mirrors src/, hierarchical conftest.py, initialization strategy for mocking, manual DI, 80% coverage minimum, SOLID/DRY/KISS principles.
+Create, extend, or refine tests following project standards: **TDD-first workflow (RED-GREEN-VALIDATE)**, structure mirrors src/, hierarchical conftest.py, initialization strategy for mocking, manual DI, 80% coverage minimum, SOLID/DRY/KISS principles.
 
 **CRITICAL:** Follow interview standards - ONE question at a time, show progress (X/TOTAL), use emojis, wait for answer before proceeding.
+
+## TDD Workflow (MANDATORY)
+
+**Every test creation must follow the RED-GREEN-VALIDATE cycle:**
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  1. RED: Write Tests First                                      │
+│     └─ Create tests based on requirements                       │
+│     └─ Run tests → ALL MUST FAIL (proves tests are valid)       │
+├─────────────────────────────────────────────────────────────────┤
+│  2. GREEN: Implement (if creating new functionality)            │
+│     └─ Write MINIMUM code to make tests pass                    │
+│     └─ Run tests → ALL MUST PASS                                │
+├─────────────────────────────────────────────────────────────────┤
+│  3. VALIDATE: Quality Gates                                     │
+│     └─ Run linter (ruff/eslint)                                 │
+│     └─ Run type checker (mypy/tsc)                              │
+│     └─ Run full test suite with coverage (≥80%)                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### TDD Execution Log
+
+**Add this to todos/PRs when creating tests:**
+
+| Phase | Command | Result | Timestamp |
+|-------|---------|--------|-----------|
+| RED | `pytest -k "test_name" -v` | X tests failed ✓ | - |
+| GREEN | `pytest -k "test_name" -v` | X tests passed ✓ | - |
+| VALIDATE | `ruff check . && mypy . && pytest --cov` | Pass, XX% ✓ | - |
+
+### Bug Fix Workflow
+
+When writing tests for bugs, follow this specific workflow:
+
+1. **DIAGNOSE:** Run existing tests - if they pass, you have a test gap
+2. **RED:** Write a failing test that reproduces the bug (must FAIL)
+3. **GREEN:** Fix the bug → test must PASS
+4. **VALIDATE:** Run full test suite for regressions
 
 ## Interview
 
@@ -136,6 +176,16 @@ def mock_{{dependency_name}}():
 
 ## Important Notes
 
+### TDD Requirements (CRITICAL)
+
+- **Tests must fail first (RED phase)** - After writing tests, run them to verify they fail. This proves the tests are valid.
+- **Verify tests pass (GREEN phase)** - Only after implementation, tests should pass.
+- **Full validation (VALIDATE phase)** - Run lint + typecheck + coverage before marking complete.
+- **Never skip the RED phase** - If tests pass without implementation, they're invalid.
+- **Log TDD execution** - Track RED/GREEN/VALIDATE in todos or PRs.
+
+### Structure & Patterns
+
 - Always mirror src/ structure in tests/ (unit/integration/e2e folders)
 - Use hierarchical conftest.py files (conftest.py at test folder levels)
 - Follow initialization strategy: optional params in constructors for mocking
@@ -149,6 +199,16 @@ def mock_{{dependency_name}}():
 - Use type hints in test code
 - Add docstrings to test classes and complex test functions
 
+### Blocking Conditions
+
+**NEVER mark test creation complete if:**
+- ❌ Tests were not run in RED phase (skipped verification)
+- ❌ Tests passed without implementation (invalid tests)
+- ❌ Any test is failing unexpectedly
+- ❌ Linter has errors
+- ❌ Type checker has errors
+- ❌ Coverage dropped below 80%
+
 ## Customization Based on Project Type
 
 **IMPORTANT:** Customize the examples below based on the actual project structure and patterns.
@@ -159,6 +219,7 @@ def mock_{{dependency_name}}():
 - Test public API exports from `__init__.py`
 - Test component interactions
 - Test exception hierarchy
+- **TDD Commands:** `pytest -k "test_name" -v` (RED/GREEN), `ruff check . && mypy . && pytest --cov` (VALIDATE)
 
 ### Hexagonal Python
 - Test use cases in isolation (mock ports)
@@ -167,11 +228,21 @@ def mock_{{dependency_name}}():
 - Test error handling and custom exceptions
 - Test FastAPI routes (mock use cases)
 - Test CLI commands (mock use cases)
+- **TDD Commands:** `pytest -k "test_name" -v` (RED/GREEN), `ruff check . && mypy . && pytest --cov --cov-fail-under=80` (VALIDATE)
 
 ### Streamlit
 - Mock Streamlit functions (`st.write`, `st.sidebar`, etc.)
 - Test data processing functions
 - Test UI component rendering
 - Test user interaction flows
+- **TDD Commands:** `pytest -k "test_name" -v` (RED/GREEN), `ruff check . && mypy . && pytest --cov` (VALIDATE)
+
+### React Frontend
+- Use Vitest + React Testing Library
+- Test components with render and screen
+- Test hooks with renderHook
+- Mock API calls and external dependencies
+- Test user interactions with fireEvent/userEvent
+- **TDD Commands:** `npm test -- --testPathPattern="ComponentName"` (RED/GREEN), `npm run lint && npm run typecheck && npm test -- --coverage` (VALIDATE)
 
 Start with question #1.

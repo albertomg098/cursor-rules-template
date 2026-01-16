@@ -1,12 +1,12 @@
 # Review and Refactor Codebase
 
-Review the existing codebase and suggest/apply refactorings based on the project's rules and patterns defined in `.cursor/skills/`.
+Review the existing codebase and suggest/apply refactorings based on the project's rules and patterns defined in `.cursor/skills/` or `.cursor/rules/`.
 
-**CRITICAL:** This command uses the project's skills (rules) as context. Make sure to read and understand all relevant skills before reviewing code.
+**CRITICAL:** This command uses the project's skills (rules) as context. Make sure to read and understand all relevant skills/rules before reviewing code. Check both `.cursor/skills/` and `.cursor/rules/` for project context.
 
 ## Step 1: Load Project Context
 
-**MUST DO FIRST:** Read all skills in `.cursor/skills/` to understand:
+**MUST DO FIRST:** Read all skills in `.cursor/skills/` and/or rules in `.cursor/rules/` to understand (check both locations):
 - Project architecture and patterns
 - Coding standards and conventions
 - Domain entities and business logic
@@ -15,9 +15,12 @@ Review the existing codebase and suggest/apply refactorings based on the project
 - Error handling patterns
 
 **How to load context:**
-1. List all directories in `.cursor/skills/`
-2. For each skill directory, read the `SKILL.md` file
-3. Extract key patterns, constraints, and examples from each skill
+1. Check for skills: List all directories in `.cursor/skills/` (if exists)
+2. Check for rules: List all files in `.cursor/rules/` (if exists)
+3. For each skill directory, read the `SKILL.md` file
+4. For each rule file, read the `.mdc` file
+5. If both exist, prefer skills format (they contain the same content)
+6. Extract key patterns, constraints, and examples from each skill/rule
 4. Build a comprehensive understanding of:
    - **Project Context** (from `000-project-core/SKILL.md` - look for "Project Context" section):
      - Project name
@@ -38,7 +41,8 @@ Review the existing codebase and suggest/apply refactorings based on the project
 2. **Identify source code locations** (e.g., `src/`, `app/`, `lib/`)
 3. **Identify test locations** (e.g., `tests/`, `__tests__/`, `spec/`)
 4. **Check for configuration files** (e.g., `pyproject.toml`, `package.json`, `tsconfig.json`)
-5. **Review project structure** against expected patterns from skills
+5. **Check environment setup** (for Python projects: ensure `uv` is used for virtual environment management)
+6. **Review project structure** against expected patterns from skills
 
 ## Step 3: Review Code Against Rules
 
@@ -129,7 +133,7 @@ Wait for answer before proceeding.
 
 ## Important Notes
 
-- **Always read skills first** - Don't assume patterns, read them from `.cursor/skills/`
+- **Always read skills/rules first** - Don't assume patterns, read them from `.cursor/skills/` or `.cursor/rules/`
 - **Use project context** - Use actual project names, entities, and patterns from skills
 - **Preserve functionality** - Refactoring should not change behavior
 - **Incremental changes** - If many files need changes, work incrementally
@@ -147,4 +151,4 @@ Wait for answer before proceeding.
 7. Summary → Fixed 5 files, domain layer now pure, added missing type hints
 ```
 
-Start by loading project context from `.cursor/skills/`.
+Start by loading project context from `.cursor/skills/` or `.cursor/rules/`.

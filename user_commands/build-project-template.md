@@ -1,12 +1,12 @@
 # Build Project Structure
 
-Build the complete project structure and initial files following all project rules defined in `.cursor/skills/`.
+Build the complete project structure and initial files following all project rules defined in `.cursor/skills/` or `.cursor/rules/`.
 
-**CRITICAL:** This command uses the project's skills (rules) as context. Make sure skills exist before building. If skills don't exist, suggest running `setup-project.md` first.
+**CRITICAL:** This command uses the project's skills (rules) as context. Make sure skills or rules exist before building. If they don't exist, suggest running `setup-project.md` first. The command should check both `.cursor/skills/` and `.cursor/rules/` for project context.
 
 ## Step 1: Load Project Context
 
-**MUST DO FIRST:** Read all skills in `.cursor/skills/` to understand:
+**MUST DO FIRST:** Read all skills in `.cursor/skills/` and/or rules in `.cursor/rules/` to understand (check both locations):
 - Project architecture and patterns
 - Project structure and organization
 - Coding standards and conventions
@@ -17,8 +17,11 @@ Build the complete project structure and initial files following all project rul
 - Configuration requirements
 
 **How to load context:**
-1. List all directories in `.cursor/skills/`
-2. For each skill directory, read the `SKILL.md` file
+1. Check for skills: List all directories in `.cursor/skills/` (if exists)
+2. Check for rules: List all files in `.cursor/rules/` (if exists)
+3. For each skill directory, read the `SKILL.md` file
+4. For each rule file, read the `.mdc` file
+5. If both exist, prefer skills format (they contain the same content)
 3. Extract key information:
    - **Project Context** (from core skill, e.g., `000-project-core/SKILL.md` or `000-package-core/SKILL.md`):
      - Project/package name
@@ -44,9 +47,9 @@ Build the complete project structure and initial files following all project rul
      - Environment setup
      - Dependency management
 
-**If skills don't exist:**
-- Show: "I don't see any skills in `.cursor/skills/`. To build a project, I need to understand the project structure and rules."
-- Ask: "Would you like me to run `setup-project.md` first to generate skills, or do you have an existing project structure I should follow?"
+**If skills/rules don't exist:**
+- Show: "I don't see any skills in `.cursor/skills/` or rules in `.cursor/rules/`. To build a project, I need to understand the project structure and rules."
+- Ask: "Would you like me to run `setup-project.md` first to generate skills and rules, or do you have an existing project structure I should follow?"
 - Wait for answer before proceeding.
 
 ## Step 2: Check Current Project State
@@ -247,7 +250,7 @@ Wait for answer if asked.
 
 3. **Show next steps:**
    - "Next steps:"
-     - Install dependencies: `pip install -e .` or `npm install`
+     - Install dependencies: `uv venv` then `uv pip install -e .` (Python) or `npm install` (Node.js)
      - Run tests: `pytest` or `npm test`
      - Review generated files and customize as needed
      - Add more domain entities/models as needed
@@ -260,7 +263,7 @@ Wait for answer if asked.
 
 ## Important Notes
 
-- **Always read skills first** - Don't assume patterns, read them from `.cursor/skills/`
+- **Always read skills/rules first** - Don't assume patterns, read them from `.cursor/skills/` or `.cursor/rules/`
 - **Use project context** - Use actual project names, entities, and patterns from skills
 - **Follow patterns exactly** - Use DO/DON'T examples from skills
 - **Create complete files** - Never use placeholders, create working code
@@ -279,4 +282,4 @@ Wait for answer if asked.
 7. Summary → Listed 15 directories, 25 files created, next steps provided
 ```
 
-Start by loading project context from `.cursor/skills/`.
+Start by loading project context from `.cursor/skills/` or `.cursor/rules/`.

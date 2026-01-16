@@ -204,7 +204,13 @@ tests/
 └── unit/                   # Unit tests (mirror src/ structure)
 ```
 
-## Generate Skills
+## Generate Skills and Rules
+
+**CRITICAL:** Generate both formats for maximum compatibility:
+1. **Skills** in `.cursor/skills/<name>/SKILL.md` format (existing format)
+2. **Rules** in `.cursor/rules/<rule_name>.mdc` format (alternative format)
+
+For each skill/rule, create BOTH files with the same content. The rule name should match the skill name (e.g., `000-project-core` → `.cursor/rules/000-project-core.mdc`).
 
 Create skills in `.cursor/skills/<name>/SKILL.md` format. **CRITICAL:** Each skill file MUST start with frontmatter. Use the appropriate format based on skill type:
 
@@ -242,39 +248,127 @@ description: "Description of what this skill enforces"
 
 Skills should be context-dependent: decide whether to apply always, auto-attach based on file patterns, or make manual.
 
-### Always-On Skills
-- `.cursor/skills/000-project-core/SKILL.md` - Architecture overview, dependency direction (domain ← application ← infrastructure for outbound, inbound can use application), SOLID/DRY/KISS principles, class initialization patterns, BaseRegistry pattern for avoiding factory pattern
+### Always-On Skills and Rules
+
+#### Core Project Skills
+- `.cursor/skills/000-project-core/SKILL.md` AND `.cursor/rules/000-project-core.mdc` - Architecture overview, dependency direction (domain ← application ← infrastructure for outbound, inbound can use application), SOLID/DRY/KISS principles, class initialization patterns, BaseRegistry pattern for avoiding factory pattern
   - Frontmatter: `name: "000-project-core"`, `description: "Architecture overview, dependency direction, SOLID/DRY/KISS principles, class initialization patterns, BaseRegistry pattern"`, `alwaysApply: true`
-- `.cursor/skills/010-python-standards/SKILL.md` - Type hints always required, numpy-style and English docstrings, pylint, async/await patterns
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/010-python-standards/SKILL.md` AND `.cursor/rules/010-python-standards.mdc` - Type hints always required, numpy-style and English docstrings, pylint, async/await patterns
   - Frontmatter: `name: "010-python-standards"`, `description: "Type hints always required, numpy-style and English docstrings, pylint, async/await patterns"`, `alwaysApply: true`
+  - **Generate both:** Create the skill file AND the rule file with identical content
 
-### Auto-Attach Skills (based on file patterns)
-- `.cursor/skills/100-domain-layer/SKILL.md` (glob: `src/domain/**`) - Pure business logic, NO external imports, ABC-based ports (not Protocol), Pydantic entities with business logic, immutable value objects (including BaseRegistry in value_objects/), custom exception hierarchy, BaseRegistry pattern for automatic subclass discovery and registry pattern
+#### Quality & Process Skills (NEW - Always generate these)
+
+- `.cursor/skills/050-tdd-workflow/SKILL.md` AND `.cursor/rules/050-tdd-workflow.mdc` - TDD workflow with RED-GREEN-VALIDATE phases
+  - Frontmatter: `name: "050-tdd-workflow"`, `description: "TDD workflow with RED-GREEN-VALIDATE phases for Python/pytest"`, `alwaysApply: true`
+  - **Content must include:**
+    - Python/pytest commands for each phase:
+      - RED: `pytest -k "test_name" -v` (expect failures)
+      - GREEN: `pytest -k "test_name" -v` (expect pass)
+      - VALIDATE: `ruff check . && mypy . && pytest --cov --cov-fail-under=80`
+    - TDD Execution Log template for todos/PRs
+    - Blocking conditions (when NOT to mark complete)
+    - Bug fix workflow: DIAGNOSE → RED → GREEN → VALIDATE
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/060-simplicity-constraints/SKILL.md` AND `.cursor/rules/060-simplicity-constraints.mdc` - Code simplicity constraints
+  - Frontmatter: `name: "060-simplicity-constraints"`, `description: "Code simplicity constraints and limits"`, `alwaysApply: true`
+  - **Content must include:**
+    - Hard limits: 20 lines/function, 200 lines/file, 3 params max, 2 levels nesting
+    - Enforcement protocol (check before completing any file)
+    - Python-specific examples: using dataclasses for many params, early returns for nesting
+    - "Never defer refactoring" principle
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/070-session-management/SKILL.md` AND `.cursor/rules/070-session-management.mdc` - Session state and context preservation
+  - Frontmatter: `name: "070-session-management"`, `description: "Session state and context preservation"`, `alwaysApply: true`
+  - **Content must include:**
+    - Checkpoint triggers (after todo, after ~20 tool calls, after decisions, end of session)
+    - Session file structure in `_project_specs/session/`
+    - Templates for: current-state.md, decisions.md, code-landmarks.md
+    - Decision logging format with context, options, reasoning
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/080-code-review/SKILL.md` AND `.cursor/rules/080-code-review.mdc` - Code review requirements
+  - Frontmatter: `name: "080-code-review"`, `description: "Code review requirements and workflow"`, `alwaysApply: true`
+  - **Content must include:**
+    - Severity levels: 🔴 Critical, 🟠 High (block), 🟡 Medium, 🟢 Low (advisory)
+    - Python-specific review points: type hints, exception handling, async patterns
+    - Hexagonal-specific: dependency direction, layer purity, port/adapter patterns
+    - Security: no secrets in code, input validation, SQL injection prevention
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/090-commit-hygiene/SKILL.md` AND `.cursor/rules/090-commit-hygiene.mdc` - Commit and PR size management
+  - Frontmatter: `name: "090-commit-hygiene"`, `description: "Commit and PR size management"`, `alwaysApply: true`
+  - **Content must include:**
+    - Size thresholds: ≤5 files OK, 6-10 WARN, >10 STOP; ≤200 lines OK, 201-400 WARN, >400 STOP
+    - Atomic commit rule ("if you need 'and', split it")
+    - Commit triggers (test passed, feature complete, refactor done, threshold hit)
+    - Splitting strategies: by layer, by entity, refactor first
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+### Auto-Attach Skills and Rules (based on file patterns)
+- `.cursor/skills/100-domain-layer/SKILL.md` AND `.cursor/rules/100-domain-layer.mdc` (glob: `src/domain/**`) - Pure business logic, NO external imports, ABC-based ports (not Protocol), Pydantic entities with business logic, immutable value objects (including BaseRegistry in value_objects/), custom exception hierarchy, BaseRegistry pattern for automatic subclass discovery and registry pattern
   - Frontmatter: `name: "100-domain-layer"`, `description: "Pure business logic, NO external imports, ABC-based ports, Pydantic entities, immutable value objects (including BaseRegistry), custom exception hierarchy, BaseRegistry pattern"`, `globs: ["src/domain/**"]`
-- `.cursor/skills/110-application-layer/SKILL.md` (glob: `src/application/**`) - BaseUseCase abstract class pattern, use case classes (one per use case OR pipelines, not both), components (main app logic), resources (utils), schemas (Pydantic)
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/110-application-layer/SKILL.md` AND `.cursor/rules/110-application-layer.mdc` (glob: `src/application/**`) - BaseUseCase abstract class pattern, use case classes (one per use case OR pipelines, not both), components (main app logic), resources (utils), schemas (Pydantic)
   - Frontmatter: `name: "110-application-layer"`, `description: "BaseUseCase abstract class pattern, use case classes, components, resources, schemas"`, `globs: ["src/application/**"]`
-- `.cursor/skills/120-infrastructure/SKILL.md` (glob: `src/infrastructure/**`) - Adapter implementation patterns, manual dependency injection
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/120-infrastructure/SKILL.md` AND `.cursor/rules/120-infrastructure.mdc` (glob: `src/infrastructure/**`) - Adapter implementation patterns, manual dependency injection
   - Frontmatter: `name: "120-infrastructure"`, `description: "Adapter implementation patterns, manual dependency injection"`, `globs: ["src/infrastructure/**"]`
-- `.cursor/skills/121-fastapi/SKILL.md` (glob: `src/infrastructure/inbound_adapters/api/**`) - FastAPI class encapsulation, route organization, middleware patterns, manual DI, error handling, response schemas
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/121-fastapi/SKILL.md` AND `.cursor/rules/121-fastapi.mdc` (glob: `src/infrastructure/inbound_adapters/api/**`) - FastAPI class encapsulation, route organization, middleware patterns, manual DI, error handling, response schemas
   - Frontmatter: `name: "121-fastapi"`, `description: "FastAPI class encapsulation, route organization, middleware patterns, manual DI, error handling, response schemas"`, `globs: ["src/infrastructure/inbound_adapters/api/**"]`
-- `.cursor/skills/122-cli/SKILL.md` (glob: `src/infrastructure/inbound_adapters/cli/**`) - Typer app class encapsulation, CLI routing pattern, manual DI
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/122-cli/SKILL.md` AND `.cursor/rules/122-cli.mdc` (glob: `src/infrastructure/inbound_adapters/cli/**`) - Typer app class encapsulation, CLI routing pattern, manual DI
   - Frontmatter: `name: "122-cli"`, `description: "Typer app class encapsulation, CLI routing pattern, manual DI"`, `globs: ["src/infrastructure/inbound_adapters/cli/**"]`
-- `.cursor/skills/123-adapters/SKILL.md` (glob: `src/infrastructure/outbound_adapters/**`) - One file per provider pattern, adapter patterns for external services
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/123-adapters/SKILL.md` AND `.cursor/rules/123-adapters.mdc` (glob: `src/infrastructure/outbound_adapters/**`) - One file per provider pattern, adapter patterns for external services
   - Frontmatter: `name: "123-adapters"`, `description: "One file per provider pattern, adapter patterns for external services"`, `globs: ["src/infrastructure/outbound_adapters/**"]`
-- `.cursor/skills/130-interfaces/SKILL.md` (glob: `src/interfaces/**`) - Entrypoint patterns (API/CLI main), NOT DTOs
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/130-interfaces/SKILL.md` AND `.cursor/rules/130-interfaces.mdc` (glob: `src/interfaces/**`) - Entrypoint patterns (API/CLI main), NOT DTOs
   - Frontmatter: `name: "130-interfaces"`, `description: "Entrypoint patterns (API/CLI main), NOT DTOs"`, `globs: ["src/interfaces/**"]`
-- `.cursor/skills/200-testing/SKILL.md` (glob: `tests/**`) - Test structure (e2e/integration/unit mirroring src/), hierarchical conftest, mocking patterns (fixtures, initialization pattern, mocks in conftest), BaseRegistry testing patterns, 80% coverage minimum
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/200-testing/SKILL.md` AND `.cursor/rules/200-testing.mdc` (glob: `tests/**`) - Test structure (e2e/integration/unit mirroring src/), hierarchical conftest, mocking patterns (fixtures, initialization pattern, mocks in conftest), BaseRegistry testing patterns, 80% coverage minimum
   - Frontmatter: `name: "200-testing"`, `description: "Test structure (e2e/integration/unit mirroring src/), hierarchical conftest, mocking patterns, BaseRegistry testing, 80% coverage minimum"`, `globs: ["tests/**"]`
-- `.cursor/skills/300-orchestration/SKILL.md` (glob: `orchestration/**`) - Orchestration patterns (DockerOperator, CLI triggering)
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/300-orchestration/SKILL.md` AND `.cursor/rules/300-orchestration.mdc` (glob: `orchestration/**`) - Orchestration patterns (DockerOperator, CLI triggering)
   - Frontmatter: `name: "300-orchestration"`, `description: "Orchestration patterns (DockerOperator, CLI triggering)"`, `globs: ["orchestration/**"]`
-- `.cursor/skills/400-config/SKILL.md` (glob: `**/config/**/*.yaml`) - YAML structure, environment-specific configs, environment folder for infra connections
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/400-config/SKILL.md` AND `.cursor/rules/400-config.mdc` (glob: `**/config/**/*.yaml`) - YAML structure, environment-specific configs, environment folder for infra connections
   - Frontmatter: `name: "400-config"`, `description: "YAML structure, environment-specific configs, environment folder for infra connections"`, `globs: ["**/config/**/*.yaml"]`
+  - **Generate both:** Create the skill file AND the rule file with identical content
 
-### Manual Skills
-- `.cursor/skills/900-new-feature/SKILL.md` - Workflow: create port (ABC) → implement use case (BaseUseCase) → create adapter → add tests → update docs
+### Manual Skills and Rules
+- `.cursor/skills/900-new-feature/SKILL.md` AND `.cursor/rules/900-new-feature.mdc` - Workflow: create port (ABC) → implement use case (BaseUseCase) → create adapter → add tests → update docs
   - Frontmatter: `name: "900-new-feature"`, `description: "Workflow: create port (ABC) → implement use case (BaseUseCase) → create adapter → add tests → update docs"` (no globs, no alwaysApply)
-- `.cursor/skills/901-update-docs/SKILL.md` - Checklist: README, API docs, tests, changelog
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/901-update-docs/SKILL.md` AND `.cursor/rules/901-update-docs.mdc` - Checklist: README, API docs, tests, changelog
   - Frontmatter: `name: "901-update-docs"`, `description: "Checklist: README, API docs, tests, changelog"` (no globs, no alwaysApply)
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+**CRITICAL - Dual Format Generation:**
+- For EACH skill listed above, you MUST create BOTH files:
+  1. `.cursor/skills/<name>/SKILL.md` (skill format with frontmatter)
+  2. `.cursor/rules/<name>.mdc` (rule format, same content, no folder structure)
+- The content of both files should be IDENTICAL (same markdown content, same frontmatter)
+- The rule file name matches the skill name (e.g., `000-project-core` → `000-project-core.mdc`)
+- This ensures compatibility with both skill-based and rule-based Cursor configurations
+
+### Session Management Structure (NEW - Always create)
+
+Create the session management directory structure:
+
+```bash
+mkdir -p _project_specs/session/archive
+```
+
+Create these session template files:
+
+- `_project_specs/session/current-state.md` - Live session state with: Active Task, Current Status, Files Being Modified, Next Steps, Resume Instructions
+- `_project_specs/session/decisions.md` - Decision log with format: Decision, Context, Options, Choice, Reasoning, Trade-offs
+- `_project_specs/session/code-landmarks.md` - Important code locations: Entry Points, Core Business Logic, Configuration, Key Patterns, Gotchas
 
 ## Generate Commands
 
@@ -339,6 +433,18 @@ If user wants them, generate:
      - Reference all project skills, especially architecture patterns from `000-project-core/SKILL.md`, domain patterns from `100-domain-layer/SKILL.md`, and testing patterns from `200-testing/SKILL.md`
    - Generate as `.cursor/commands/review-and-refactor.md` in the user's project
    - This command uses the project's skills as context to review and refactor existing code
+
+9. **`.cursor/commands/code-review.md`** (ALWAYS GENERATE - NEW)
+   - Run code review with severity classification
+   - Check for: 🔴 Critical, 🟠 High (block commits), 🟡 Medium, 🟢 Low (advisory)
+   - Categories: Security, Performance, Architecture (hexagonal patterns), Code Quality, Testing
+   - Hexagonal-specific checks: dependency direction, layer purity, port/adapter patterns
+
+10. **`.cursor/commands/check-commit-size.md`** (ALWAYS GENERATE - NEW)
+    - Check current changes against thresholds
+    - Thresholds: ≤5 files OK, 6-10 WARN, >10 STOP; ≤200 lines OK, 201-400 WARN, >400 STOP
+    - Commands: `git diff --stat HEAD`, `git diff --shortstat HEAD`
+    - Suggest splitting strategies if too large
 
 ## Skill Content Requirements
 

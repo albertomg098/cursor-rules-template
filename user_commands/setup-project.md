@@ -10,7 +10,9 @@ Ask me ONE question:
 - `hexagonal-python` - Python backend with hexagonal architecture (FastAPI + optional Airflow)
 - `sdk-python` - Python SDK/Library/Component package
 - `streamlit` - Streamlit MVP application
-- `react-frontend` - React frontend application (Vite/Next.js)
+- `react-frontend` - React SPA (Vite/CRA) with Vercel best practices
+- `nextjs-frontend` - Next.js App Router frontend with Vercel best practices
+- `nextjs-fullstack` - Next.js fullstack (database, auth, API routes) with Vercel best practices
 - `custom` - Other architecture (will ask for details)
 
 **Note:** To understand what a project type includes before choosing, use `/explore-project-type` command (type `/explore-project-type` in Cursor chat when in the template repo).
@@ -26,6 +28,8 @@ Based on my answer, you must:
    - `sdk-python` → Access User Command `init-sdk-python` (or read `user_commands/init-sdk-python.md` if available)
    - `streamlit` → Access User Command `init-streamlit` (or read `user_commands/init-streamlit.md` if available)
    - `react-frontend` → Access User Command `init-react-frontend` (or read `user_commands/init-react-frontend.md` if available)
+   - `nextjs-frontend` → Access User Command `init-nextjs-frontend` (or read `user_commands/init-nextjs-frontend.md` if available)
+   - `nextjs-fullstack` → Access User Command `init-nextjs-fullstack` (or read `user_commands/init-nextjs-fullstack.md` if available)
    - `custom` → Use detailed interview (see below)
 
    **Note:** These commands should be set up as User Commands in Cursor Settings. If they're not available, try reading the files from `user_commands/` directory in the workspace, or prompt the user to set them up.
@@ -187,7 +191,13 @@ Wait for my answer, then proceed to command generation.
 
 After handling existing files (or if none exist), generate:
 
-### Skills (Rules)
+### Skills and Rules
+
+**CRITICAL:** Generate both formats for maximum compatibility:
+1. **Skills** in `.cursor/skills/<name>/SKILL.md` format (existing format)
+2. **Rules** in `.cursor/rules/<rule_name>.mdc` format (alternative format)
+
+For each skill/rule, create BOTH files with the same content. The rule name should match the skill name (e.g., `000-project-core` → `.cursor/rules/000-project-core.mdc`).
 
 **CRITICAL:** Each skill file MUST start with frontmatter. Use the appropriate format based on skill type:
 
@@ -223,9 +233,11 @@ description: "Description of what this skill enforces"
 - `globs` is OPTIONAL - only include if auto-attaching to file patterns (mutually exclusive with `alwaysApply`)
 - `alwaysApply` is OPTIONAL - only include if this is an always-on skill (true). Mutually exclusive with `globs`. For manual skills, omit both `globs` and `alwaysApply`.
 
-Generate these skills:
+Generate these skills and rules (create BOTH formats for each):
 
-- `.cursor/skills/000-project-core/SKILL.md` (always-on) - Project overview, architecture, domain
+### Core Project Skills (Always-On)
+
+- `.cursor/skills/000-project-core/SKILL.md` AND `.cursor/rules/000-project-core.mdc` (always-on) - Project overview, architecture, domain
   - Frontmatter: `name: "000-project-core"`, `description: "Project overview, architecture, domain"`, `alwaysApply: true`
   - **CRITICAL:** Must include a "Project Context" section at the top with:
     - Project name (from Q1)
@@ -234,16 +246,117 @@ Generate these skills:
     - Tech stack summary (from Q5-Q9)
     - Architecture pattern (from Q3)
   - This context helps the AI understand what the project is about and make appropriate suggestions
-- `.cursor/skills/010-language-standards/SKILL.md` (always-on) - Language conventions, formatting
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/010-language-standards/SKILL.md` AND `.cursor/rules/010-language-standards.mdc` (always-on) - Language conventions, formatting
   - Frontmatter: `name: "010-language-standards"`, `description: "Language conventions, formatting"`, `alwaysApply: true`
-- Layer-specific skills with appropriate globs based on structure
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+### Quality & Process Skills (Always-On) - NEW
+
+- `.cursor/skills/050-tdd-workflow/SKILL.md` AND `.cursor/rules/050-tdd-workflow.mdc` (always-on) - TDD workflow with RED-GREEN-VALIDATE
+  - Frontmatter: `name: "050-tdd-workflow"`, `description: "TDD workflow with RED-GREEN-VALIDATE phases"`, `alwaysApply: true`
+  - **Content must include:**
+    - Language-specific test commands (based on tech stack: pytest for Python, jest/vitest for JS/TS)
+    - RED phase: Commands to run tests expecting failures
+    - GREEN phase: Commands to run tests expecting pass
+    - VALIDATE phase: Full validation command (lint + typecheck + coverage)
+    - TDD Execution Log template for todos/PRs
+    - Blocking conditions (when NOT to mark complete)
+    - Bug fix workflow with test gap analysis
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/060-simplicity-constraints/SKILL.md` AND `.cursor/rules/060-simplicity-constraints.mdc` (always-on) - Code simplicity constraints
+  - Frontmatter: `name: "060-simplicity-constraints"`, `description: "Code simplicity constraints and limits"`, `alwaysApply: true`
+  - **Content must include:**
+    - Hard limits table: 20 lines/function, 200 lines/file, 3 params max, 2 levels nesting
+    - Enforcement protocol (check before completing any file)
+    - Language-specific examples for reducing complexity
+    - "Never defer refactoring" principle
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/070-session-management/SKILL.md` AND `.cursor/rules/070-session-management.mdc` (always-on) - Session state and context preservation
+  - Frontmatter: `name: "070-session-management"`, `description: "Session state and context preservation"`, `alwaysApply: true`
+  - **Content must include:**
+    - Checkpoint triggers table (when to update state)
+    - Session file structure (`_project_specs/session/`)
+    - Templates for: current-state.md, decisions.md, code-landmarks.md
+    - Decision logging format
+    - Resume instructions format
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/080-code-review/SKILL.md` AND `.cursor/rules/080-code-review.mdc` (always-on) - Code review requirements
+  - Frontmatter: `name: "080-code-review"`, `description: "Code review requirements and workflow"`, `alwaysApply: true`
+  - **Content must include:**
+    - Severity levels (🔴 Critical, 🟠 High, 🟡 Medium, 🟢 Low)
+    - Review categories (Security, Performance, Architecture, Code Quality, Testing)
+    - Framework/language-specific review points
+    - Workflow: Code → Test → Review → Fix → Commit
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/090-commit-hygiene/SKILL.md` AND `.cursor/rules/090-commit-hygiene.mdc` (always-on) - Commit and PR size management
+  - Frontmatter: `name: "090-commit-hygiene"`, `description: "Commit and PR size management"`, `alwaysApply: true`
+  - **Content must include:**
+    - Size thresholds table (files, lines, time)
+    - Atomic commit rule ("if you need 'and', split it")
+    - Commit triggers (when to commit)
+    - PR size impact research
+    - Splitting strategies
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+### Layer-Specific Skills (Auto-Attach)
+
+- Layer-specific skills and rules with appropriate globs based on structure
   - Each should have: `name`, `description`, `globs: ["pattern/**"]`
-- `.cursor/skills/200-testing/SKILL.md` (glob: `tests/**` or test patterns)
+  - **Generate both:** For each layer skill, create BOTH `.cursor/skills/<name>/SKILL.md` AND `.cursor/rules/<name>.mdc` with identical content
+
+### Testing Skills (Auto-Attach)
+
+- `.cursor/skills/200-testing/SKILL.md` AND `.cursor/rules/200-testing.mdc` (glob: `tests/**` or test patterns)
   - Frontmatter: `name: "200-testing"`, `description: "Testing patterns and standards"`, `globs: ["tests/**"]` (or appropriate test pattern)
-- `.cursor/skills/900-new-feature/SKILL.md` (manual) - Workflow for adding features
+  - **Content must include:**
+    - TDD workflow integration (reference 050-tdd-workflow)
+    - Test structure mirroring source
+    - Fixture patterns and conftest organization
+    - Mocking strategies
+    - Coverage requirements (80% minimum)
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+### Workflow Skills (Manual)
+
+- `.cursor/skills/900-new-feature/SKILL.md` AND `.cursor/rules/900-new-feature.mdc` (manual) - Workflow for adding features
   - Frontmatter: `name: "900-new-feature"`, `description: "Workflow for adding features"` (no globs, no alwaysApply)
-- `.cursor/skills/901-update-docs/SKILL.md` (manual) - Documentation checklist
+  - **Content must include:**
+    - TDD workflow steps (RED-GREEN-VALIDATE)
+    - Layer-by-layer implementation order
+    - Checklist before marking complete
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/901-update-docs/SKILL.md` AND `.cursor/rules/901-update-docs.mdc` (manual) - Documentation checklist
   - Frontmatter: `name: "901-update-docs"`, `description: "Documentation checklist"` (no globs, no alwaysApply)
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+### Session Management Structure
+
+**CRITICAL:** Also create the session management directory structure:
+
+```bash
+mkdir -p _project_specs/session/archive
+```
+
+Create these session files:
+
+- `_project_specs/session/current-state.md` - Template for live session state
+- `_project_specs/session/decisions.md` - Template for decision logging
+- `_project_specs/session/code-landmarks.md` - Template for code navigation
+
+**CRITICAL - Dual Format Generation:**
+- For EACH skill listed above, you MUST create BOTH files:
+  1. `.cursor/skills/<name>/SKILL.md` (skill format with frontmatter)
+  2. `.cursor/rules/<name>.mdc` (rule format, same content, no folder structure)
+- The content of both files should be IDENTICAL (same markdown content, same frontmatter)
+- The rule file name matches the skill name (e.g., `000-project-core` → `000-project-core.mdc`)
+- This ensures compatibility with both skill-based and rule-based Cursor configurations
 
 ### Commands
 
@@ -290,6 +403,94 @@ Generate these skills:
    - Reference testing patterns from `200-testing/SKILL.md`
 3. Generate as `.cursor/commands/review-and-refactor.md` in the user's project
 4. This command uses the project's skills as context to review and refactor existing code
+
+**`.cursor/commands/create-or-refine-tests.md`** - Create or refine tests following TDD workflow.
+
+**To generate:**
+1. Access User Command `create-or-refine-tests-template` (or try reading from `user_commands/create-or-refine-tests-template.md` if available in workspace)
+2. Customize it based on project type:
+   - Use language-specific test commands (pytest for Python, jest/vitest for JS/TS)
+   - Reference TDD workflow from `050-tdd-workflow/SKILL.md`
+   - Reference testing patterns from `200-testing/SKILL.md`
+3. Generate as `.cursor/commands/create-or-refine-tests.md` in the user's project
+
+**`.cursor/commands/code-review.md`** - Run code review with severity classification.
+
+**Content:**
+```markdown
+# Code Review
+
+Run a code review on the current changes or specified files.
+
+## Usage
+
+Analyze the code for:
+- 🔴 **Critical** issues (must fix, blocks commit)
+- 🟠 **High** issues (should fix, blocks commit)
+- 🟡 **Medium** issues (fix soon, can commit)
+- 🟢 **Low** issues (nice to have)
+
+## Review Categories
+
+1. **Security** - Vulnerabilities, injection risks, secrets exposure
+2. **Performance** - N+1 queries, memory leaks, inefficient algorithms
+3. **Architecture** - SOLID violations, coupling issues, layer breaches
+4. **Code Quality** - Complexity, duplication, readability
+5. **Testing** - Coverage gaps, missing edge cases
+
+## Output Format
+
+For each issue found:
+- Severity level (emoji)
+- File and line number
+- Issue description
+- Suggested fix
+
+## Blocking Rules
+
+- 🔴 Critical + 🟠 High = **BLOCKED** - Fix before commit
+- 🟡 Medium + 🟢 Low = **ADVISORY** - Can commit, fix soon
+```
+
+**`.cursor/commands/check-commit-size.md`** - Check if changes are ready to commit.
+
+**Content:**
+```markdown
+# Check Commit Size
+
+Check current changes against commit size thresholds.
+
+## Thresholds
+
+| Metric | 🟢 OK | 🟡 WARN | 🔴 STOP |
+|--------|-------|---------|---------|
+| Files | ≤ 5 | 6-10 | > 10 |
+| Lines | ≤ 200 | 201-400 | > 400 |
+
+## Commands to Run
+
+```bash
+# Check files changed
+git diff --stat HEAD
+
+# Check line counts
+git diff --shortstat HEAD
+```
+
+## Output
+
+Based on thresholds:
+- 🟢 **OK** - Good to commit
+- 🟡 **WARN** - Consider committing soon
+- 🔴 **STOP** - Commit NOW, changes too large
+
+## If Too Large
+
+Suggest how to split:
+1. By layer (database → API → frontend)
+2. By feature (CRUD operations separately)
+3. Refactor first, then feature
+```
 
 **Additional commands** (based on Q16):
 

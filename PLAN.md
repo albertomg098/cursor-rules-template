@@ -1,10 +1,75 @@
 # Cursor Rules Toolkit - Implementation Plan
 
+> **Last Updated:** January 2026
+> **Status:** Phase 1 & 2 Complete, Phase 3 Pending
+
 ## Overview
 
 This repository serves as a personal, version-controlled system for generating Cursor IDE rules across all projects. It provides:
 1. **User Rules** - Global instructions for Cursor Settings → Rules
 2. **User Commands** - Prompts that trigger rule generation workflows
+
+---
+
+## 🎯 Recent Updates (claude-bootstrap Integration)
+
+### ✅ Phase 1: Global Rules Enhancement (COMPLETE)
+
+Enhanced `user_rules/` with best practices from claude-bootstrap:
+
+| File | Changes |
+|------|---------|
+| `global_rules.md` | Added TDD-First, Simplicity Constraints, Session Management, Code Review, Commit Hygiene |
+| `python_rules.md` | Added Python-specific TDD workflow (pytest commands), quality check script |
+| `security_rules.md` | **NEW** - Client env var warnings, security checklist, validation patterns |
+| `README.md` | Updated to document new rules |
+
+### ✅ Phase 2: Commands Enhancement (COMPLETE)
+
+Updated all `init-*.md` commands to generate new quality skills:
+
+| New Skill | ID | Description |
+|-----------|------|-------------|
+| TDD Workflow | `050-tdd-workflow` | RED-GREEN-VALIDATE phases, execution log |
+| Simplicity Constraints | `060-simplicity-constraints` | 20 lines/func, 200/file limits |
+| Session Management | `070-session-management` | Checkpoint triggers, state files |
+| Code Review | `080-code-review` | Severity levels, project-specific checks |
+| Commit Hygiene | `090-commit-hygiene` | Size thresholds, atomic commits |
+
+**New Commands Generated:**
+- `code-review.md` - Run code review with severity classification
+- `check-commit-size.md` - Check changes against thresholds
+
+**New Directory Structure:**
+```
+_project_specs/
+└── session/
+    ├── current-state.md
+    ├── decisions.md
+    ├── code-landmarks.md
+    └── archive/
+```
+
+**Updated Files:**
+- `setup-project.md`
+- `init-hexagonal-python.md`
+- `init-sdk-python.md`
+- `init-streamlit.md`
+- `init-react-frontend.md`
+- `create-or-refine-tests-template.md` (TDD workflow added)
+
+### 📋 Phase 3: Remaining Tasks (PENDING)
+
+| Priority | Task | Description |
+|----------|------|-------------|
+| P2 | Update main README.md | Document new features |
+| P2 | Create `code-review-template.md` | Dedicated review command template |
+| P2 | Create `check-commit-size-template.md` | Dedicated commit size template |
+| P3 | Code deduplication | Add `CODE_INDEX.md` concept to global_rules |
+| P3 | Iterative development | Error classification guidance |
+| P3 | Test implementation | Run `/setup-project` on sample project |
+
+---
 
 ## Repository Structure
 

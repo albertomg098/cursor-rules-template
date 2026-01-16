@@ -43,7 +43,12 @@ Copy these to **Cursor Settings → Rules** (`Ctrl+,` → search "Rules"):
    - Copy entire contents
    - Append to the same Rules field in Cursor Settings
 
-3. **React-specific rules:** (when available) Open `user_rules/react_rules.md` and append
+3. **Security rules:** (NEW) Open `user_rules/security_rules.md` on GitHub
+   - Copy entire contents
+   - Append for security-critical projects
+   - Covers: secrets management, input validation, OWASP Top 10
+
+4. **React-specific rules:** (when available) Open `user_rules/react_rules.md` and append
 
 **Note:** You can combine multiple rule files into one Rules field, or keep them separate. The `global_rules.md` should always be included.
 
@@ -65,6 +70,8 @@ The files in `user_commands/` are markdown prompts that **MUST be set up as User
    - ✅ `init-sdk-python` → Copy from `user_commands/init-sdk-python.md`
    - ✅ `init-streamlit` → Copy from `user_commands/init-streamlit.md`
    - ✅ `init-react-frontend` → Copy from `user_commands/init-react-frontend.md`
+   - ✅ `init-nextjs-frontend` → Copy from `user_commands/init-nextjs-frontend.md`
+   - ✅ `init-nextjs-fullstack` → Copy from `user_commands/init-nextjs-fullstack.md`
 
 **⚠️ Critical:** The `setup-project` command acts as a router and **requires** these commands to be set up as User Commands. Without them, routing will fail.
 
@@ -125,6 +132,15 @@ For **any new or existing project**:
 - Auto-activate based on file patterns (via globs)
 - Or always-on for core project rules
 
+**Quality & Process Skills** (NEW - Always generated):
+| Skill | ID | Description |
+|-------|-----|-------------|
+| TDD Workflow | `050-tdd-workflow` | RED-GREEN-VALIDATE phases, execution log |
+| Simplicity Constraints | `060-simplicity-constraints` | 20 lines/func, 200/file limits |
+| Session Management | `070-session-management` | Checkpoint triggers, state files |
+| Code Review | `080-code-review` | Severity levels, project-specific checks |
+| Commit Hygiene | `090-commit-hygiene` | Size thresholds, atomic commits |
+
 **Commands** - `.cursor/commands/<name>.md` in YOUR project
 - Reusable workflows accessible via `/` in Cursor chat
 - Project-specific helpers and checklists
@@ -132,16 +148,45 @@ For **any new or existing project**:
 - **Important:** These are generated in YOUR project, not in this template repo
 - **Common examples:**
   - `/create-or-refine-tests` (always for Python projects)
+  - `/code-review` (NEW - run code review with severity classification)
+  - `/check-commit-size` (NEW - check changes against size thresholds)
   - `/create-use-case`, `/add-entity` (for Hexagonal Python)
   - `/create-github-workflow` (optional, if you want CI/CD)
+
+**Session Management Structure** (NEW):
+```
+_project_specs/
+└── session/
+    ├── current-state.md      # Live state, next steps
+    ├── decisions.md          # Key decisions (append-only)
+    ├── code-landmarks.md     # Important code locations
+    └── archive/              # Past session summaries
+```
 
 ### Supported Project Types
 
 - **Hexagonal Python** - FastAPI + Airflow backend applications
 - **Python SDK** - Library/package development
 - **Streamlit** - MVP applications
-- **React Frontend** - Production React apps (Vite/Next.js)
+- **React Frontend** - React SPA (Vite/CRA) with **Vercel Engineering Best Practices**
+- **Next.js Frontend** - Next.js App Router frontend with **Vercel Engineering Best Practices**
+- **Next.js Fullstack** - Next.js with database, auth, API routes with **Vercel Engineering Best Practices**
 - **Custom** - Any other architecture (full interview)
+
+### Vercel Engineering Best Practices Integration
+
+Frontend project types (React, Next.js) include 45+ performance optimization rules from Vercel Engineering:
+
+| Category | Impact | Examples |
+|----------|--------|----------|
+| Eliminating Waterfalls | CRITICAL | Promise.all(), defer await, Suspense boundaries |
+| Bundle Optimization | CRITICAL | Direct imports, dynamic imports, preload on intent |
+| Server-Side Performance | HIGH | React.cache(), LRU caching, parallel fetching |
+| Client-Side Data | MEDIUM-HIGH | SWR deduplication, optimistic updates |
+| Re-render Optimization | MEDIUM | Functional setState, derived state |
+| Rendering Performance | MEDIUM | content-visibility, static JSX hoisting |
+
+Plus **Web Interface Guidelines** for 100+ accessibility, UX, and performance best practices.
 
 ---
 
@@ -155,6 +200,7 @@ cursor-rules-template/
 ├── user_rules/                  # Global rules (one-time setup)
 │   ├── global_rules.md          # General behavior and patterns (copy to Cursor Settings → Rules)
 │   ├── python_rules.md          # Python-specific standards (append to Rules)
+│   ├── security_rules.md        # Security best practices (NEW - append for security-critical code)
 │   └── react_rules.md           # React-specific standards (when available, append to Rules)
 │
 ├── user_commands/               # Templates for generating YOUR project commands
@@ -234,6 +280,47 @@ Cursor has two distinct systems that work together:
 - Type `/` in Cursor chat to see available commands
 - Commands appear automatically from `.cursor/commands/`
 - Skills work silently in the background based on file patterns
+
+---
+
+## 🎯 Quality & Process Features (NEW)
+
+The toolkit now generates quality and process skills automatically:
+
+### TDD Workflow (`050-tdd-workflow`)
+- **RED-GREEN-VALIDATE** cycle for all code changes
+- Language-specific test commands (pytest, jest, vitest)
+- TDD execution log template for todos/PRs
+- Bug fix workflow with test gap analysis
+- Blocking conditions (when NOT to mark complete)
+
+### Simplicity Constraints (`060-simplicity-constraints`)
+- **Hard limits:** 20 lines/function, 200 lines/file, 3 params max
+- Enforcement protocol (check before completing any file)
+- Language-specific refactoring examples
+- "Never defer refactoring" principle
+
+### Session Management (`070-session-management`)
+- Checkpoint triggers (after todo, every ~20 tool calls, decisions, session end)
+- Session state structure in `_project_specs/session/`
+- Templates: current-state.md, decisions.md, code-landmarks.md
+- Resume instructions format
+
+### Code Review (`080-code-review`)
+- Severity levels: 🔴 Critical, 🟠 High, 🟡 Medium, 🟢 Low
+- Review categories: Security, Performance, Architecture, Code Quality, Testing
+- Framework-specific review points
+- Blocking rules (Critical + High = blocked)
+
+### Commit Hygiene (`090-commit-hygiene`)
+- Size thresholds: ≤5 files OK, 6-10 WARN, >10 STOP
+- Atomic commit rule ("if you need 'and', split it")
+- Commit triggers (when to commit)
+- Splitting strategies (by layer, by feature, refactor first)
+
+### New Commands Generated
+- `/code-review` - Run code review with severity classification
+- `/check-commit-size` - Check changes against size thresholds
 
 ---
 
@@ -400,8 +487,9 @@ To understand what a project type includes:
 **Note:** After updating global rules, they apply to all projects automatically.
 
 **Rule File Structure:**
-- `global_rules.md` - Always include this (interview standards, general preferences)
+- `global_rules.md` - Always include this (interview standards, TDD workflow, simplicity, session management, code review, commit hygiene)
 - `python_rules.md` - Include for Python projects (type hints, async patterns, testing)
+- `security_rules.md` - Include for security-critical projects (secrets, input validation, OWASP)
 - `react_rules.md` - Include for React projects (when available)
 - Other framework/language rules - Use `/add-framework-rules` command to create new ones
 
@@ -543,6 +631,15 @@ A: For Python projects, `/create-or-refine-tests` is always generated. Other com
 
 **Q: Where are project commands generated?**  
 A: In YOUR project's `.cursor/commands/` folder, not in this template repo. Type `/` in Cursor when working in your project to see them.
+
+**Q: What are the new quality skills (050-090)?**  
+A: These are always-on skills that enforce quality practices: TDD workflow, simplicity constraints, session management, code review, and commit hygiene. They're generated automatically for all project types.
+
+**Q: What is the session management structure?**  
+A: A `_project_specs/session/` directory with files to track session state, decisions, and code landmarks. This helps maintain context across long development sessions.
+
+**Q: What about security rules?**  
+A: The new `user_rules/security_rules.md` covers secrets management, input validation, OWASP Top 10. Include it for security-critical projects by appending to your Cursor Settings → Rules.
 
 ---
 
