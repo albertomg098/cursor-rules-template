@@ -104,7 +104,13 @@ src/
 └── docs/                   # Documentation
 ```
 
-## Generate Skills
+## Generate Skills and Rules
+
+**CRITICAL:** Generate both formats for maximum compatibility:
+1. **Skills** in `.cursor/skills/<name>/SKILL.md` format (existing format)
+2. **Rules** in `.cursor/rules/<rule_name>.mdc` format (alternative format)
+
+For each skill/rule, create BOTH files with the same content. The rule name should match the skill name (e.g., `000-package-core` → `.cursor/rules/000-package-core.mdc`).
 
 Create skills in `.cursor/skills/<name>/SKILL.md` format. **CRITICAL:** Each skill file MUST start with frontmatter. Use the appropriate format based on skill type:
 
@@ -142,31 +148,93 @@ description: "Description of what this skill enforces"
 
 Skills should be context-dependent: decide whether to apply always, auto-attach based on file patterns, or make manual.
 
-### Always-On Skills
-- `.cursor/skills/000-package-core/SKILL.md` - SDK design principles: public API = `__init__.py` exports, component folders with `__init__.py`, `_internal/` is private, deprecate before removing (min 1 minor version), SOLID/DRY/KISS principles, manual dependency injection via constructors
+### Always-On Skills and Rules
+
+#### Core Project Skills
+- `.cursor/skills/000-package-core/SKILL.md` AND `.cursor/rules/000-package-core.mdc` - SDK design principles: public API = `__init__.py` exports, component folders with `__init__.py`, `_internal/` is private, deprecate before removing (min 1 minor version), SOLID/DRY/KISS principles, manual dependency injection via constructors
   - Frontmatter: `name: "000-package-core"`, `description: "SDK design principles: public API exports, component structure, deprecation, SOLID/DRY/KISS, manual DI"`, `alwaysApply: true`
-- `.cursor/skills/010-python-standards/SKILL.md` - Python conventions, type hints always required, numpy-style docstrings with examples, pylint compliance
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/010-python-standards/SKILL.md` AND `.cursor/rules/010-python-standards.mdc` - Python conventions, type hints always required, numpy-style docstrings with examples, pylint compliance
   - Frontmatter: `name: "010-python-standards"`, `description: "Python conventions, type hints always required, numpy-style docstrings with examples, pylint compliance"`, `alwaysApply: true`
+  - **Generate both:** Create the skill file AND the rule file with identical content
 
-### Auto-Attach Skills (based on file patterns)
-- `.cursor/skills/100-public-api/SKILL.md` (glob: `src/{{package}}/__init__.py`) - Export rules, API stability, versioning, only export from component `__init__.py` files
+#### Quality & Process Skills (NEW - Always generate these)
+
+- `.cursor/skills/050-tdd-workflow/SKILL.md` AND `.cursor/rules/050-tdd-workflow.mdc` - TDD workflow with RED-GREEN-VALIDATE phases
+  - Frontmatter: `name: "050-tdd-workflow"`, `description: "TDD workflow with RED-GREEN-VALIDATE phases for Python/pytest"`, `alwaysApply: true`
+  - **Content:** Python/pytest commands (RED: `pytest -k "test_name" -v`, GREEN: same expecting pass, VALIDATE: `ruff check . && mypy . && pytest --cov --cov-fail-under=80`), TDD Execution Log template, blocking conditions, bug fix workflow
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/060-simplicity-constraints/SKILL.md` AND `.cursor/rules/060-simplicity-constraints.mdc` - Code simplicity constraints
+  - Frontmatter: `name: "060-simplicity-constraints"`, `description: "Code simplicity constraints and limits"`, `alwaysApply: true`
+  - **Content:** Hard limits (20 lines/function, 200 lines/file, 3 params max), enforcement protocol, Python examples
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/070-session-management/SKILL.md` AND `.cursor/rules/070-session-management.mdc` - Session state and context preservation
+  - Frontmatter: `name: "070-session-management"`, `description: "Session state and context preservation"`, `alwaysApply: true`
+  - **Content:** Checkpoint triggers, session file structure, templates for current-state.md, decisions.md, code-landmarks.md
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/080-code-review/SKILL.md` AND `.cursor/rules/080-code-review.mdc` - Code review requirements
+  - Frontmatter: `name: "080-code-review"`, `description: "Code review requirements and workflow"`, `alwaysApply: true`
+  - **Content:** Severity levels (🔴🟠🟡🟢), SDK-specific checks (public API stability, deprecation, backward compatibility)
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+- `.cursor/skills/090-commit-hygiene/SKILL.md` AND `.cursor/rules/090-commit-hygiene.mdc` - Commit and PR size management
+  - Frontmatter: `name: "090-commit-hygiene"`, `description: "Commit and PR size management"`, `alwaysApply: true`
+  - **Content:** Size thresholds, atomic commit rule, commit triggers, splitting strategies
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+### Auto-Attach Skills and Rules (based on file patterns)
+- `.cursor/skills/100-public-api/SKILL.md` AND `.cursor/rules/100-public-api.mdc` (glob: `src/{{package}}/__init__.py`) - Export rules, API stability, versioning, only export from component `__init__.py` files
   - Frontmatter: `name: "100-public-api"`, `description: "Export rules, API stability, versioning, only export from component __init__.py files"`, `globs: ["src/{{package}}/__init__.py"]`
-- `.cursor/skills/110-core/SKILL.md` (glob: `src/{{package}}/core/**`) - Core patterns, ABC-based interfaces (not Protocol), domain-like structure, exceptions in `core/exceptions/`, models in `core/models/`, config in `core/config/`, base classes and ABCs in `core/base/`
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/110-core/SKILL.md` AND `.cursor/rules/110-core.mdc` (glob: `src/{{package}}/core/**`) - Core patterns, ABC-based interfaces (not Protocol), domain-like structure, exceptions in `core/exceptions/`, models in `core/models/`, config in `core/config/`, base classes and ABCs in `core/base/`
   - Frontmatter: `name: "110-core"`, `description: "Core patterns, ABC-based interfaces, domain-like structure, exceptions/models/config/base organization"`, `globs: ["src/{{package}}/core/**"]`
-- `.cursor/skills/120-{{component}}/SKILL.md` (glob: `src/{{package}}/{{component}}/**`) - Generate ONE skill per component: component structure (folder with `__init__.py` and related scripts), manual DI via constructors, optional params for testing/mocking, stateless classes
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/120-{{component}}/SKILL.md` AND `.cursor/rules/120-{{component}}.mdc` (glob: `src/{{package}}/{{component}}/**`) - Generate ONE skill per component: component structure (folder with `__init__.py` and related scripts), manual DI via constructors, optional params for testing/mocking, stateless classes
   - Frontmatter: `name: "120-{{component}}"`, `description: "Component structure, manual DI via constructors, optional params for testing/mocking, stateless classes"`, `globs: ["src/{{package}}/{{component}}/**"]`
-- `.cursor/skills/130-extensions/SKILL.md` (glob: `src/{{package}}/extensions/**`) - Extension/plugin patterns, ABC-based interfaces for extensibility
+  - **Generate both:** Create the skill file AND the rule file with identical content (for EACH component)
+- `.cursor/skills/130-extensions/SKILL.md` AND `.cursor/rules/130-extensions.mdc` (glob: `src/{{package}}/extensions/**`) - Extension/plugin patterns, ABC-based interfaces for extensibility
   - Frontmatter: `name: "130-extensions"`, `description: "Extension/plugin patterns, ABC-based interfaces for extensibility"`, `globs: ["src/{{package}}/extensions/**"]`
-- `.cursor/skills/200-testing/SKILL.md` (glob: `tests/**`) - Testing patterns: structure mirrors src/ with unit/, integration/, e2e/, hierarchical conftest.py files, initialization strategy for mocking, mocks in conftest, pytest, 80% coverage minimum
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/200-testing/SKILL.md` AND `.cursor/rules/200-testing.mdc` (glob: `tests/**`) - Testing patterns: structure mirrors src/ with unit/, integration/, e2e/, hierarchical conftest.py files, initialization strategy for mocking, mocks in conftest, pytest, 80% coverage minimum
   - Frontmatter: `name: "200-testing"`, `description: "Testing patterns: structure mirrors src/, hierarchical conftest.py, initialization strategy for mocking, pytest, 80% coverage minimum"`, `globs: ["tests/**"]`
-- `.cursor/skills/300-documentation/SKILL.md` (glob: `docs/**`, `README.md`) - Documentation standards: numpy-style docstrings with examples, attractive README with setup, main entrypoints, functionalities
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/300-documentation/SKILL.md` AND `.cursor/rules/300-documentation.mdc` (glob: `docs/**`, `README.md`) - Documentation standards: numpy-style docstrings with examples, attractive README with setup, main entrypoints, functionalities
   - Frontmatter: `name: "300-documentation"`, `description: "Documentation standards: numpy-style docstrings with examples, attractive README"`, `globs: ["docs/**", "README.md"]`
+  - **Generate both:** Create the skill file AND the rule file with identical content
 
-### Manual Skills
-- `.cursor/skills/900-api-changes/SKILL.md` - Breaking change workflow: deprecation → new version → removal
+### Manual Skills and Rules
+- `.cursor/skills/900-api-changes/SKILL.md` AND `.cursor/rules/900-api-changes.mdc` - Breaking change workflow: deprecation → new version → removal
   - Frontmatter: `name: "900-api-changes"`, `description: "Breaking change workflow: deprecation → new version → removal"` (no globs, no alwaysApply)
-- `.cursor/skills/901-release/SKILL.md` - Publishing workflow: semantic versioning via CI/CD or GitHub workflows, version bump → changelog → tests → publish
+  - **Generate both:** Create the skill file AND the rule file with identical content
+- `.cursor/skills/901-release/SKILL.md` AND `.cursor/rules/901-release.mdc` - Publishing workflow: semantic versioning via CI/CD or GitHub workflows, version bump → changelog → tests → publish
   - Frontmatter: `name: "901-release"`, `description: "Publishing workflow: semantic versioning via CI/CD, version bump → changelog → tests → publish"` (no globs, no alwaysApply)
+  - **Generate both:** Create the skill file AND the rule file with identical content
+
+**CRITICAL - Dual Format Generation:**
+- For EACH skill listed above, you MUST create BOTH files:
+  1. `.cursor/skills/<name>/SKILL.md` (skill format with frontmatter)
+  2. `.cursor/rules/<name>.mdc` (rule format, same content, no folder structure)
+- The content of both files should be IDENTICAL (same markdown content, same frontmatter)
+- The rule file name matches the skill name (e.g., `000-package-core` → `000-package-core.mdc`)
+- For component-specific skills (120-{{component}}), generate both formats for EACH component
+- This ensures compatibility with both skill-based and rule-based Cursor configurations
+
+### Session Management Structure (NEW - Always create)
+
+Create the session management directory structure:
+
+```bash
+mkdir -p _project_specs/session/archive
+```
+
+Create these session template files:
+
+- `_project_specs/session/current-state.md` - Live session state
+- `_project_specs/session/decisions.md` - Decision log
+- `_project_specs/session/code-landmarks.md` - Important code locations
 
 ## Key Principles in Skills
 
@@ -263,6 +331,16 @@ Use MY actual package name and components in all examples.
 2. Customize it for SDK Python:
    - Emphasize: review public API exports (only from `__init__.py`), check component structure (folders with `__init__.py`), verify ABC interfaces (not Protocol), check core organization (exceptions/models/config/base), ensure manual DI via constructors, verify test structure mirrors src/, check documentation standards
    - Reference all project skills, especially SDK design principles from `000-package-core/SKILL.md`, component patterns from component-specific skills, and testing patterns from `200-testing/SKILL.md`
+
+**NEW - ALWAYS generate these commands:**
+
+**`.cursor/commands/code-review.md`** - Run code review with severity classification.
+- Check for: 🔴 Critical, 🟠 High (block commits), 🟡 Medium, 🟢 Low (advisory)
+- SDK-specific checks: public API stability, backward compatibility, deprecation warnings, documentation
+
+**`.cursor/commands/check-commit-size.md`** - Check current changes against thresholds.
+- Thresholds: ≤5 files OK, 6-10 WARN, >10 STOP; ≤200 lines OK, 201-400 WARN, >400 STOP
+- Commands: `git diff --stat HEAD`, `git diff --shortstat HEAD`
 3. Generate as `.cursor/commands/review-and-refactor.md` in the user's project
 4. This command uses the project's skills as context to review and refactor existing code
 
